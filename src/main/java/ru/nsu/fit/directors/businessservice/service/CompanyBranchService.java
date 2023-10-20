@@ -9,7 +9,7 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public interface CompanyBranchService {
-    String createCompanyBranch(CompanyCreateRequest companyCreateRequest);
+    void createCompanyBranch(CompanyCreateRequest companyCreateRequest);
 
     List<ResponseShortEstablishmentInfo> getEstablishmentsByOwner();
 }

@@ -11,6 +11,8 @@ import reactor.core.publisher.Mono;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequest;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
+import ru.nsu.fit.directors.businessservice.model.Company;
+import ru.nsu.fit.directors.businessservice.repository.CompanyBranchRepository;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -22,10 +24,11 @@ import java.util.Optional;
 public class CompanyBranchServiceImpl implements CompanyBranchService {
     private final WebClient.Builder establishmentClientBuilder;
     private final SecurityService securityService;
+    private final CompanyBranchRepository companyBranchRepository;
 
     @Override
-    public String createCompanyBranch(CompanyCreateRequest companyCreateRequest) {
-        ResponseEntity<String> response = establishmentClientBuilder.build().post()
+    public void createCompanyBranch(CompanyCreateRequest companyCreateRequest) {
+        ResponseEntity<Long> response = establishmentClientBuilder.build().post()
             .uri(uriBuilder ->
                 uriBuilder.path("/establishment")
                     .queryParam("ownerId", securityService.getLoggedInUser().getId())
@@ -33,10 +36,14 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
             .body(Mono.just(companyCreateRequest), CompanyCreateRequest.class)
             .accept(MediaType.APPLICATION_JSON)
             .retrieve()
-            .toEntity(String.class)
+            .toEntity(Long.class)
             .block();
-
-        return Optional.ofNullable(response).map(HttpEntity::getBody).orElse(null);
+        Optional.ofNullable(response)
+            .map(HttpEntity::getBody)
+            .ifPresent(id -> companyBranchRepository.save(new Company()
+                .setId(id)
+                .setBusinessUser(securityService.getLoggedInUser()))
+            );
 
     }
 
