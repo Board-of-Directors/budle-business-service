@@ -24,6 +24,7 @@ public record CompanyCreateRequest(
     String address,
     String subway,
     Integer price,
+    Float rating,
     @NotNull(message = "Информация о рабочих часах заведения не может быть не задано.")
     @Size(min = 1, max = 7, message = "Дней работы не может быть меньше 1 и больше 7")
     @Valid
@@ -31,7 +32,7 @@ public record CompanyCreateRequest(
     @NotNull(message = "Информация о фотографиях заведения не может быть пустой.")
     List<RequestPhotoDto> photosInput,
     String map,
-    String cuisineCount,
+    String cuisineCountry,
     String starsCount
 ) {
 }
