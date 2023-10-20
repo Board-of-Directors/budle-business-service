@@ -15,7 +15,7 @@ public record CompanyCreateRequest(
     @NotNull(message = "Информация о тэгах заведения не может быть не задана.")
     List<RequestTagDto> tags,
     @NotNull(message = "Основное изображение не может быть не задано.")
-    String mainPhoto,
+    String image,
     @NotNull(message = "Описание не может быть не задано.")
     @Size(max = 1000, message = "Описание не может быть длиннее 1000 символов.")
     String description,
@@ -23,12 +23,15 @@ public record CompanyCreateRequest(
     @Size(max = 200, message = "Адрес не может быть длиннее 200 символов.")
     String address,
     String subway,
+    Integer price,
     @NotNull(message = "Информация о рабочих часах заведения не может быть не задано.")
     @Size(min = 1, max = 7, message = "Дней работы не может быть меньше 1 и больше 7")
     @Valid
     List<RequestWorkingHoursDto> workingHours,
     @NotNull(message = "Информация о фотографиях заведения не может быть пустой.")
     List<RequestPhotoDto> photosInput,
-    String map
+    String map,
+    String cuisineCount,
+    String starsCount
 ) {
 }
