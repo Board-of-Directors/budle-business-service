@@ -56,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private boolean isUserOwner(Long establishmentId) {
-        return securityService.getLoggedInUser().getCreatorOfCompanies()
+        return securityService.getLoggedInUser().getCompanies()
             .stream()
             .anyMatch(company -> company.getId().equals(establishmentId));
     }

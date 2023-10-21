@@ -1,6 +1,5 @@
 package ru.nsu.fit.directors.businessservice.model;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -33,8 +32,8 @@ public class BusinessUser implements UserDetails {
     private String password;
     private String email;
     private String login;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Company> creatorOfCompanies;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "businessUser")
+    private List<Company> companies;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
