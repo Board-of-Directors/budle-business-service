@@ -49,8 +49,8 @@ public class BusinessUserController {
     }
 
     @PostMapping("/company")
-    public String create(@RequestBody CompanyCreateRequest companyCreateRequest) {
-        return companyBranchService.createCompanyBranch(companyCreateRequest);
+    public void create(@RequestBody CompanyCreateRequest companyCreateRequest) {
+        companyBranchService.createCompanyBranch(companyCreateRequest);
     }
 
     @GetMapping(value = "/establishments")
