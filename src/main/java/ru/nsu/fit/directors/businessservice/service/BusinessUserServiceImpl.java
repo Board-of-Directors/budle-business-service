@@ -25,10 +25,35 @@ public class BusinessUserServiceImpl implements BusinessUserService, UserDetails
     private final JavaMailSender javaMailSender;
 
     public void registerBusinessUser(BusinessUserRegisterRequest businessUserRegisterRequest) {
+        String password = RandomStringUtils.random(12, true, true);
+        BusinessUser businessUser = toBusinessUser(businessUserRegisterRequest, password);
+        businessUserRepository.save(businessUser);
+        sendMailNotification(businessUser, password);
+    }
+
+    private void sendMailNotification(BusinessUser user, String password) {
+        String text = String.join("\n",
+            "Добрый день, %s %s!\n".formatted(user.getFirstName(), user.getLastName()),
+            "Мы поздравляем вас с тем, что вы успешно зарегистрировались на нашем сервисе! Высылаем вам ваши логин и пароль.",
+            "Логин: %s".formatted(user.getLogin()),
+            "Пароль: %s".formatted(password),
+            "\nС уважением и заботой, команда Budle."
+        );
+        new Thread(() -> {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("Budle");
+            message.setTo(user.getEmail());
+            message.setSubject("Вы успешно зарегистрировались!");
+            message.setText(text);
+            javaMailSender.send(message);
+        }).start();
+
+    }
+
+    private BusinessUser toBusinessUser(BusinessUserRegisterRequest businessUserRegisterRequest, String password) {
         String[] names = businessUserRegisterRequest.name().split(" ");
         String login = "admin";
-        String password = RandomStringUtils.random(12, true, true);
-        BusinessUser user = new BusinessUser()
+        return new BusinessUser()
             .setMiddleName(names[0])
             .setFirstName(names[1])
             .setLastName(names[2])
@@ -36,20 +61,6 @@ public class BusinessUserServiceImpl implements BusinessUserService, UserDetails
             .setPhoneNumber(businessUserRegisterRequest.phoneNumber())
             .setPassword(passwordEncoder.encode(password))
             .setLogin(login);
-        businessUserRepository.save(user);
-        String text = String.join("\n",
-            "Добрый день, %s %s!\n".formatted(user.getFirstName(), user.getLastName()),
-            "Мы поздравляем вас с тем, что вы успешно зарегистрировались на нашем сервисе! Высылаем вам ваши логин и пароль.",
-            "Логин: %s".formatted(login),
-            "Пароль: %s".formatted(password),
-            "\nС уважением и заботой, команда Budle."
-        );
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("Budle");
-        message.setTo(user.getEmail());
-        message.setSubject("Вы успешно зарегистрировались!");
-        message.setText(text);
-        javaMailSender.send(message);
     }
 
     @Override
