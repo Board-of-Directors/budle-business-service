@@ -16,13 +16,13 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
-    private final SecurityService securityService;
+    private final RoleService roleService;
     private final KafkaTemplate<String, OrderStatusChangedEvent> kafkaTemplate;
     private final OrderApi orderApi;
 
     @Override
     public List<ResponseOrderDto> getOrdersByEstablishment(Long establishmentId) {
-        if (isUserOwner(establishmentId)) {
+        if (roleService.isUserOwner(establishmentId)) {
             return orderApi.syncListGetWithParams(
                 uriBuilder -> uriBuilder.path("/order/establishment")
                     .queryParam("establishmentId", establishmentId)
@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void setOrderStatus(Long orderId, Long establishmentId, int status) {
-        if (isUserOwner(establishmentId)) {
+        if (roleService.isUserOwner(establishmentId)) {
             kafkaTemplate.send(
                 "orderTopic",
                 OrderStatusChangedEvent.builder()
@@ -46,11 +46,5 @@ public class OrderServiceImpl implements OrderService {
                     .build()
             );
         }
-    }
-
-    private boolean isUserOwner(Long establishmentId) {
-        return securityService.getLoggedInUser().getCompanies()
-            .stream()
-            .anyMatch(company -> company.getId().equals(establishmentId));
     }
 }

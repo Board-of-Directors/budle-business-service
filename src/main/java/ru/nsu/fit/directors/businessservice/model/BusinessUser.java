@@ -5,6 +5,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -34,6 +35,8 @@ public class BusinessUser implements UserDetails {
     private String login;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "businessUser")
     private List<Company> companies;
+    @ManyToMany(mappedBy = "workers")
+    private List<Company> workerInCompanies;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
