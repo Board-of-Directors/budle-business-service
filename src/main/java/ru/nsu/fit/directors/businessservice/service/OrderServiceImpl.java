@@ -2,43 +2,36 @@ package ru.nsu.fit.directors.businessservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.MediaType;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+import ru.nsu.fit.directors.businessservice.api.OrderApi;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseOrderDto;
 import ru.nsu.fit.directors.businessservice.event.OrderStatusChangedEvent;
+import ru.nsu.fit.directors.businessservice.exceptions.NotEnoughRightException;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @ParametersAreNonnullByDefault
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
-    private final WebClient.Builder orderClientBuilder;
     private final SecurityService securityService;
-    private final KafkaTemplate kafkaTemplate;
+    private final KafkaTemplate<String, OrderStatusChangedEvent> kafkaTemplate;
+    private final OrderApi orderApi;
 
     @Override
     public List<ResponseOrderDto> getOrdersByEstablishment(Long establishmentId) {
         if (isUserOwner(establishmentId)) {
-            ParameterizedTypeReference<List<ResponseOrderDto>> ref = new ParameterizedTypeReference<>() {
-            };
-            var response = orderClientBuilder.build()
-                .get()
-                .uri(uriBuilder -> uriBuilder.path("/order/establishment")
+            return orderApi.syncListGetWithParams(
+                uriBuilder -> uriBuilder.path("/order/establishment")
                     .queryParam("establishmentId", establishmentId)
-                    .build())
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .toEntity(ref)
-                .block();
-            return Optional.ofNullable(response).map(HttpEntity::getBody).orElse(null);
+                    .build(),
+                new ParameterizedTypeReference<>() {
+                }
+            );
         }
-        throw new RuntimeException("No rights for this operation");
+        throw new NotEnoughRightException();
     }
 
     @Override

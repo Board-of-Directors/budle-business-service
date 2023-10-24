@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.businessservice.dto.BusinessUserLoginRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
+import ru.nsu.fit.directors.businessservice.exceptions.InvalidCredentialsException;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.repository.BusinessUserRepository;
 
@@ -66,12 +67,12 @@ public class BusinessUserServiceImpl implements BusinessUserService, UserDetails
     @Override
     public void loginBusinessUser(BusinessUserLoginRequest businessUserLoginRequest) {
         businessUserRepository.findBusinessUserByLogin(businessUserLoginRequest.login())
-            .orElseThrow(RuntimeException::new);
+            .orElseThrow(InvalidCredentialsException::new);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return businessUserRepository.findBusinessUserByLogin(username)
-            .orElseThrow();
+            .orElseThrow(InvalidCredentialsException::new);
     }
 }
