@@ -20,7 +20,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public boolean isUserWorker(Long userId, Long establishmentId) {
+    public boolean isUserWorker(Long establishmentId) {
         return isInCompanies(
             securityService.getLoggedInUser().getWorkerInCompanies(),
             establishmentId

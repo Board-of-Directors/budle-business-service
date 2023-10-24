@@ -22,7 +22,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<ResponseOrderDto> getOrdersByEstablishment(Long establishmentId) {
-        if (roleService.isUserOwner(establishmentId)) {
+        if (roleService.isUserOwner(establishmentId) || roleService.isUserWorker(establishmentId)) {
             return orderApi.syncListGetWithParams(
                 uriBuilder -> uriBuilder.path("/order/establishment")
                     .queryParam("establishmentId", establishmentId)
@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void setOrderStatus(Long orderId, Long establishmentId, int status) {
-        if (roleService.isUserOwner(establishmentId)) {
+        if (roleService.isUserOwner(establishmentId) || roleService.isUserWorker(establishmentId)) {
             kafkaTemplate.send(
                 "orderTopic",
                 OrderStatusChangedEvent.builder()
