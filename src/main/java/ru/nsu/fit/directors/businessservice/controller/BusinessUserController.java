@@ -2,6 +2,7 @@ package ru.nsu.fit.directors.businessservice.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 @RequiredArgsConstructor
 @RequestMapping(value = "/business")
+@CrossOrigin(allowCredentials = "true", originPatterns = {"*"})
 public class BusinessUserController {
     private final BusinessUserService businessUserService;
     private final CompanyBranchService companyBranchService;

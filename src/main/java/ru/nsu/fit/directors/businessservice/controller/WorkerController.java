@@ -1,6 +1,7 @@
 package ru.nsu.fit.directors.businessservice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/business/worker")
 @RequiredArgsConstructor
+@CrossOrigin(allowCredentials = "true", originPatterns = {"*"})
 public class WorkerController {
     private final WorkerService workerService;
 
