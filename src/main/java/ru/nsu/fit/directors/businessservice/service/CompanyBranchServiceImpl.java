@@ -25,7 +25,7 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
     @Override
     public void createCompanyBranch(CompanyCreateRequest companyCreateRequest) {
         Long createdEstablishmentId = establishmentApi.syncPostRequestWithBody(
-            uriBuilder -> uriBuilder.path("/establishment")
+            uriBuilder -> uriBuilder.path("/internal/establishment")
                 .queryParam("ownerId", securityService.getLoggedInUser().getId())
                 .build(),
             new ParameterizedTypeReference<>() {
@@ -46,7 +46,7 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
     public List<ResponseShortEstablishmentInfo> getEstablishmentsByOwner() {
         BusinessUser user = securityService.getLoggedInUser();
         return establishmentApi.syncListGetWithParams(
-            uriBuilder -> uriBuilder.path("/establishment/owner")
+            uriBuilder -> uriBuilder.path("/internal/establishment/owner")
                 .queryParam("ownerId", user.getId())
                 .build(),
             new ParameterizedTypeReference<>() {
