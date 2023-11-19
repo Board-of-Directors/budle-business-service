@@ -21,6 +21,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.nsu.fit.directors.businessservice.dto.response.BaseResponse;
+import ru.nsu.fit.directors.businessservice.exceptions.AlreadyRegisteredException;
 import ru.nsu.fit.directors.businessservice.exceptions.BaseException;
 import ru.nsu.fit.directors.businessservice.exceptions.ClientException;
 import ru.nsu.fit.directors.businessservice.exceptions.InvalidCredentialsException;
@@ -39,17 +40,12 @@ public class ArticleController extends ResponseEntityExceptionHandler implements
         NotEnoughRightException.class,
         InvalidCredentialsException.class,
         ServerNotAvailableException.class,
-        ClientException.class
+        ClientException.class,
+        AlreadyRegisteredException.class
     })
     public <T extends BaseException> ResponseEntity<BaseResponse<Object>> handleException(T e) {
         BaseResponse<Object> response = new BaseResponse<>(e.getMessage(), e.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @ExceptionHandler(SecurityException.class)
-    public ResponseEntity<BaseResponse<String>> handleException(SecurityException exception) {
-        BaseResponse<String> response = new BaseResponse<>("Пользователь не вошел в аккаунт", "SecurityException");
-        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 
     @Override

@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.businessservice.dto.BusinessUserLoginRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
+import ru.nsu.fit.directors.businessservice.exceptions.AlreadyRegisteredException;
 import ru.nsu.fit.directors.businessservice.exceptions.InvalidCredentialsException;
 import ru.nsu.fit.directors.businessservice.mapper.BusinessUserMapper;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
@@ -25,6 +26,9 @@ public class BusinessUserServiceImpl implements BusinessUserService, UserDetails
 
     @Override
     public void registerBusinessUser(BusinessUserRegisterRequest businessUserRegisterRequest) {
+        if (businessUserRepository.existsBusinessUserByEmailOrPhoneNumber(businessUserRegisterRequest.email(), businessUserRegisterRequest.phoneNumber())) {
+            throw new AlreadyRegisteredException();
+        }
         String password = RandomStringUtils.random(12, true, true);
         BusinessUser businessUser = businessUserMapper.toBusinessUser(businessUserRegisterRequest, password);
         businessUserRepository.save(businessUser);

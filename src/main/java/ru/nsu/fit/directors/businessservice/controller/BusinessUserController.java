@@ -1,7 +1,9 @@
 package ru.nsu.fit.directors.businessservice.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,7 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 @RequiredArgsConstructor
 @RequestMapping(value = "/business")
+@Validated
 public class BusinessUserController {
     private final BusinessUserService businessUserService;
     private final CompanyBranchService companyBranchService;
@@ -33,12 +36,12 @@ public class BusinessUserController {
     private final OrderService orderService;
 
     @PostMapping(value = "/registration")
-    public void register(@RequestBody BusinessUserRegisterRequest businessUserRegisterRequest) {
+    public void register(@RequestBody @Valid BusinessUserRegisterRequest businessUserRegisterRequest) {
         businessUserService.registerBusinessUser(businessUserRegisterRequest);
     }
 
     @PostMapping(value = "/login")
-    public boolean login(@RequestBody BusinessUserLoginRequest businessUserLoginRequest) {
+    public boolean login(@RequestBody @Valid BusinessUserLoginRequest businessUserLoginRequest) {
         businessUserService.loginBusinessUser(businessUserLoginRequest);
         securityService.autoLogin(
             businessUserLoginRequest.login(),

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,7 +18,13 @@ public class SecurityConfiguration {
         return http.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(
                 matcher -> matcher
-                    .requestMatchers("/business/login", "/business/registration", "/business/swagger-ui/**", "/business/api-docs/**")
+                    .requestMatchers(
+                        "/business/login",
+                        "/business/registration",
+                        "/business/swagger-ui/**",
+                        "/business/api-docs/**",
+                        "/error"
+                    )
                     .permitAll()
                     .anyRequest()
                     .authenticated()
@@ -29,7 +34,9 @@ public class SecurityConfiguration {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return WebSecurity::ignoring;
+        return (web) -> {
+
+        };
     }
 
     @Bean
