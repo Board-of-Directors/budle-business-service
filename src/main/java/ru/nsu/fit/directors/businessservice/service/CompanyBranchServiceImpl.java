@@ -11,8 +11,10 @@ import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.model.Company;
 import ru.nsu.fit.directors.businessservice.repository.CompanyBranchRepository;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @ParametersAreNonnullByDefault
@@ -43,11 +45,12 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
     }
 
     @Override
-    public List<ResponseShortEstablishmentInfo> getEstablishmentsByOwner() {
+    public List<ResponseShortEstablishmentInfo> getEstablishmentsByOwner(@Nullable String name) {
         BusinessUser user = securityService.getLoggedInUser();
         return establishmentApi.syncListGetWithParams(
             uriBuilder -> uriBuilder.path("/internal/establishment/owner")
                 .queryParam("ownerId", user.getId())
+                .queryParamIfPresent("name", Optional.ofNullable(name))
                 .build(),
             new ParameterizedTypeReference<>() {
             }

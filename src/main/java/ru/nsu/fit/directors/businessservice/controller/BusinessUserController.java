@@ -57,8 +57,10 @@ public class BusinessUserController {
     }
 
     @GetMapping(value = "/establishments")
-    public List<ResponseShortEstablishmentInfo> ownerEstablishments() {
-        return companyBranchService.getEstablishmentsByOwner();
+    public List<ResponseShortEstablishmentInfo> ownerEstablishments(
+        @RequestParam(required = false) String name
+    ) {
+        return companyBranchService.getEstablishmentsByOwner(name);
     }
 
     @GetMapping(value = "/orders")

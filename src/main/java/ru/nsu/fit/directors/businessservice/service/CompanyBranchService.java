@@ -11,5 +11,5 @@ import java.util.List;
 public interface CompanyBranchService {
     void createCompanyBranch(CompanyCreateRequest companyCreateRequest);
 
-    List<ResponseShortEstablishmentInfo> getEstablishmentsByOwner();
+    List<ResponseShortEstablishmentInfo> getEstablishmentsByOwner(String name);
 }
