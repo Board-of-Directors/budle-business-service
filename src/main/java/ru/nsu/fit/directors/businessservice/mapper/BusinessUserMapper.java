@@ -44,6 +44,7 @@ public class BusinessUserMapper {
             .id(businessUser.getId())
             .firstName(businessUser.getFirstName())
             .middleName(businessUser.getMiddleName())
+            .lastName(businessUser.getLastName())
             .build();
     }
 }

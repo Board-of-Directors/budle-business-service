@@ -6,6 +6,7 @@ import lombok.Builder;
 public record ResponseWorkerDto(
     Long id,
     String firstName,
-    String middleName
+    String middleName,
+    String lastName
 ) {
 }

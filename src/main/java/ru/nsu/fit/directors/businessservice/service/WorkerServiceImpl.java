@@ -25,7 +25,7 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public void createWorker(RequestWorkerDto workerDto) {
-        if (!roleService.isUserOwner(   workerDto.establishmentId())) {
+        if (!roleService.isUserOwner(workerDto.establishmentId())) {
             throw new NotEnoughRightException();
         }
         String password = RandomStringUtils.random(12, true, true);
