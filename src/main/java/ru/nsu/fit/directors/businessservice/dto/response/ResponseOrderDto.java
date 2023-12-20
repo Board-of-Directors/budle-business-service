@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class ResponseOrderDto {
+    private Long id;
     private Integer spotNumber;
     private LocalDateTime bookingTime;
     private Integer guestCount;
