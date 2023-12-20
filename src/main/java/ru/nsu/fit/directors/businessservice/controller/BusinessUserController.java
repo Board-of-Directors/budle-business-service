@@ -52,7 +52,7 @@ public class BusinessUserController {
     }
 
     @PostMapping("/company")
-    public void create(@RequestBody CompanyCreateRequest companyCreateRequest) {
+    public void create(@RequestBody @Valid CompanyCreateRequest companyCreateRequest) {
         companyBranchService.createCompanyBranch(companyCreateRequest);
     }
 
