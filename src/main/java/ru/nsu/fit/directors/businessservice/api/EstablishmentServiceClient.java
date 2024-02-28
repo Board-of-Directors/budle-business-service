@@ -11,7 +11,7 @@ import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishm
 
 @FeignClient("establishment-service")
 public interface EstablishmentServiceClient {
-    @RequestMapping(method = RequestMethod.POST, value = "/internal/establishment", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/internal/establishment", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     Long createEstablishment(@RequestParam Long ownerId);
 
     @RequestMapping(method = RequestMethod.GET, value = "/internal/establishment/owner", produces = MediaType.APPLICATION_JSON_VALUE)
