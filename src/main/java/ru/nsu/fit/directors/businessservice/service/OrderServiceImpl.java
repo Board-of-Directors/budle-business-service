@@ -23,7 +23,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<ResponseOrderDto> getOrdersByEstablishment(Long establishmentId) {
         if (roleService.isUserOwner(establishmentId) || roleService.isUserWorker(establishmentId)) {
-            return orderServiceClient.getEstablishmentOrders(establishmentId);
+            return orderServiceClient.getEstablishmentOrders(establishmentId).getBody().getResult();
         }
         throw new NotEnoughRightException();
     }
