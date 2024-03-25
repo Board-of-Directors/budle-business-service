@@ -22,11 +22,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class BusinessUserServiceImpl implements BusinessUserService, UserDetailsService {
     private final BusinessUserRepository businessUserRepository;
     private final BusinessUserMapper businessUserMapper;
-    private final NotificationService notificationService;
+    private final MailNotificationService notificationService;
 
     @Override
     public void registerBusinessUser(BusinessUserRegisterRequest businessUserRegisterRequest) {
-        if (businessUserRepository.existsBusinessUserByEmailOrPhoneNumber(businessUserRegisterRequest.email(), businessUserRegisterRequest.phoneNumber())) {
+        if (businessUserRepository.existsBusinessUserByEmailOrPhoneNumber(
+            businessUserRegisterRequest.email(),
+            businessUserRegisterRequest.phoneNumber()
+        )) {
             throw new AlreadyRegisteredException();
         }
         String password = RandomStringUtils.random(12, true, true);

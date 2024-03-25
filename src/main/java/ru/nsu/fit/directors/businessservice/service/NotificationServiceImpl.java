@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import ru.nsu.fit.directors.businessservice.dto.BusinessOrderNotificationEvent;
@@ -20,31 +18,9 @@ import ru.nsu.fit.directors.businessservice.repository.NotificationRepository;
 @Service
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
-    private final JavaMailSender javaMailSender;
     private final CompanyBranchRepository companyBranchRepository;
     private final NotificationRepository notificationRepository;
     private final SecurityService securityService;
-
-    @Override
-    public void sendRegistrationNotification(BusinessUser user, String password) {
-        String text = String.join(
-            "\n",
-            "Добрый день, %s %s!\n".formatted(user.getFirstName(), user.getLastName()),
-            "Мы поздравляем вас с тем, что вы успешно зарегистрировались на нашем сервисе! Высылаем вам ваши логин и пароль.",
-            "Логин: %s".formatted(user.getLogin()),
-            "Пароль: %s".formatted(password),
-            "\nС уважением и заботой, команда Budle."
-        );
-        new Thread(() -> {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("Budle");
-            message.setTo(user.getEmail());
-            message.setSubject("Вы успешно зарегистрировались!");
-            message.setText(text);
-            javaMailSender.send(message);
-        }).start();
-
-    }
 
     @Override
     public void handleOrderNotification(BusinessOrderNotificationEvent orderNotificationEvent) {

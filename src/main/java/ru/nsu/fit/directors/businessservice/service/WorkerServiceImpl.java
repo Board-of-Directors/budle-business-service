@@ -21,7 +21,7 @@ public class WorkerServiceImpl implements WorkerService {
     private final BusinessUserMapper businessUserMapper;
     private final BusinessUserRepository businessUserRepository;
     private final CompanyBranchRepository companyBranchRepository;
-    private final NotificationService notificationService;
+    private final MailNotificationService notificationService;
 
     @Override
     public void createWorker(RequestWorkerDto workerDto) {
