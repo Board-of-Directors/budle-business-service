@@ -23,7 +23,8 @@ public class SecurityConfiguration {
                         "/business/registration",
                         "/business/swagger-ui/**",
                         "/business/api-docs/**",
-                        "/error"
+                        "/error",
+                        "/**"
                     )
                     .permitAll()
                     .anyRequest()
