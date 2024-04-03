@@ -13,14 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.nsu.fit.directors.businessservice.dto.BusinessUserLoginRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequest;
+import ru.nsu.fit.directors.businessservice.dto.request.MessageDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseOrderDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
 import ru.nsu.fit.directors.businessservice.service.BusinessUserService;
+import ru.nsu.fit.directors.businessservice.service.ChatService;
 import ru.nsu.fit.directors.businessservice.service.CompanyBranchService;
 import ru.nsu.fit.directors.businessservice.service.OrderService;
 import ru.nsu.fit.directors.businessservice.service.SecurityService;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
 import java.util.List;
 
 @RestController
@@ -34,10 +37,21 @@ public class BusinessUserController {
     private final HttpServletRequest httpServletRequest;
     private final SecurityService securityService;
     private final OrderService orderService;
+    private final ChatService chatService;
 
     @PostMapping(value = "/registration")
     public void register(@RequestBody @Valid BusinessUserRegisterRequest businessUserRegisterRequest) {
         businessUserService.registerBusinessUser(businessUserRegisterRequest);
+    }
+
+    @GetMapping("/chat/history")
+    public List<MessageDto> getMessages(@RequestParam Long orderId) {
+        return chatService.getChat(orderId);
+    }
+
+    @GetMapping(value = "/me")
+    public Long me() {
+        return securityService.getLoggedInUser().getId();
     }
 
     @PostMapping(value = "/login")

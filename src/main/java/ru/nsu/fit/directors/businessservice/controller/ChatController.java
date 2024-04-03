@@ -28,9 +28,4 @@ public class ChatController {
         log.info("received message {}", message);
         chatService.save(message.getPayload(), orderId);
     }
-
-    @GetMapping("/business/chat/history")
-    public List<MessageDto> getMessages(@RequestParam Long orderId) {
-        return chatService.getChat(orderId);
-    }
 }
