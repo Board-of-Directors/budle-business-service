@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import ru.nsu.fit.directors.businessservice.exceptions.UserNotLoggedInException;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.repository.BusinessUserRepository;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
@@ -36,6 +38,7 @@ public class ChatServiceImpl implements ChatService {
             CHAT_TOPIC,
             new BusinessMessageEvent(businessUser.getId(), orderId, messageDto.message())
         );
+        log.info("Successfully sent to CHAT_TOPIC {}", messageDto);
     }
 
     @Nonnull
