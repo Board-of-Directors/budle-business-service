@@ -24,6 +24,7 @@ import ru.nsu.fit.directors.businessservice.repository.BusinessUserRepository;
 @ParametersAreNonnullByDefault
 public class ChatServiceImpl implements ChatService {
     private static final String CHAT_TOPIC = "chatTopic";
+    private static final String ORDER_TOPIC = "orderTopic";
     private final KafkaTemplate<String, BusinessMessageEvent> kafkaTemplate;
     private final SecurityService securityService;
     private final OrderService orderService;
@@ -36,6 +37,10 @@ public class ChatServiceImpl implements ChatService {
             .orElseThrow(UserNotLoggedInException::new);
         kafkaTemplate.send(
             CHAT_TOPIC,
+            new BusinessMessageEvent(businessUser.getId(), orderId, messageDto.message())
+        );
+        kafkaTemplate.send(
+            ORDER_TOPIC,
             new BusinessMessageEvent(businessUser.getId(), orderId, messageDto.message())
         );
         log.info("Successfully sent to CHAT_TOPIC {}", messageDto);
