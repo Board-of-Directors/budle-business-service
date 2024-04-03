@@ -8,6 +8,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.directors.businessservice.dto.request.MessageDto;
 import ru.nsu.fit.directors.businessservice.event.UserMessageEvent;
@@ -21,6 +22,7 @@ public class ChatServiceImpl implements ChatService {
     private final KafkaTemplate<String, UserMessageEvent> kafkaTemplate;
     private final SecurityService securityService;
     private final OrderService orderService;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     @Override
     public void save(MessageDto messageDto, Long orderId) {
@@ -36,5 +38,10 @@ public class ChatServiceImpl implements ChatService {
     public List<MessageDto> getChat(Long orderId) {
         BusinessUser user = securityService.getLoggedInUser();
         return Objects.requireNonNull(orderService.getMessages(user.getId(), orderId));
+    }
+
+    @Override
+    public void handleMessage(UserMessageEvent userMessageEvent) {
+        simpMessagingTemplate.convertAndSend("/topic/" + userMessageEvent.orderId(), userMessageEvent);
     }
 }
