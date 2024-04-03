@@ -19,5 +19,5 @@ public interface OrderServiceClient {
     ResponseEntity<BaseResponse<List<ResponseOrderDto>>> getEstablishmentOrders(@RequestParam Long establishmentId);
 
     @RequestMapping(method = RequestMethod.GET, value = "/order/message/business", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<BaseResponse<List<MessageDto>>> getMessages(@RequestParam Long userId, @RequestParam Long orderId);
+    ResponseEntity<BaseResponse<List<MessageDto>>> getMessages(@RequestParam Long businessId, @RequestParam Long orderId);
 }
