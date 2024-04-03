@@ -1,13 +1,11 @@
 package ru.nsu.fit.directors.businessservice.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,15 +22,14 @@ public class ChatController {
     @MessageMapping("/send/{orderId}")
     public void send(
         @DestinationVariable Long orderId,
-        Message<MessageDto> message,
-        @Headers Map<String, Object> messageHeaders
+        Message<MessageDto> message
     ) {
         log.info("received order message {}", orderId);
-        log.info("message headers {}", messageHeaders);
+        log.info("received message {}", message);
         chatService.save(message.getPayload(), orderId);
     }
 
-    @GetMapping
+    @GetMapping("/business/chat/history")
     public List<MessageDto> getMessages(@RequestParam Long orderId) {
         return chatService.getChat(orderId);
     }

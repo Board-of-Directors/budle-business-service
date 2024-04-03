@@ -13,7 +13,9 @@ import org.springframework.stereotype.Component;
 import ru.nsu.fit.directors.businessservice.dto.request.MessageDto;
 import ru.nsu.fit.directors.businessservice.event.BusinessMessageEvent;
 import ru.nsu.fit.directors.businessservice.event.UserMessageEvent;
+import ru.nsu.fit.directors.businessservice.exceptions.UserNotLoggedInException;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
+import ru.nsu.fit.directors.businessservice.repository.BusinessUserRepository;
 
 @Component
 @RequiredArgsConstructor
@@ -24,13 +26,15 @@ public class ChatServiceImpl implements ChatService {
     private final SecurityService securityService;
     private final OrderService orderService;
     private final SimpMessagingTemplate simpMessagingTemplate;
+    private final BusinessUserRepository businessUserRepository;
 
     @Override
     public void save(MessageDto messageDto, Long orderId) {
-        BusinessUser user = securityService.getLoggedInUser();
+        BusinessUser businessUser = businessUserRepository.findById(messageDto.userId())
+            .orElseThrow(UserNotLoggedInException::new);
         kafkaTemplate.send(
             CHAT_TOPIC,
-            new BusinessMessageEvent(user.getId(), orderId, messageDto.message())
+            new BusinessMessageEvent(businessUser.getId(), orderId, messageDto.message())
         );
     }
 
