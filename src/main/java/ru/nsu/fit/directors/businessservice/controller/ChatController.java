@@ -23,8 +23,6 @@ public class ChatController {
 
     @MessageMapping("/send/{orderId}")
     public void send(@DestinationVariable Long orderId, Message<MessageDto> message, HttpServletRequest request) {
-        log.info(request.toString());
-        log.info(SecurityContextHolder.getContext().toString());
         log.info("received order message {}", orderId);
         chatService.save(message.getPayload(), orderId);
     }
