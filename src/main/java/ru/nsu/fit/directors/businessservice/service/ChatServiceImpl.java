@@ -11,6 +11,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.directors.businessservice.dto.request.MessageDto;
+import ru.nsu.fit.directors.businessservice.event.BusinessMessageEvent;
 import ru.nsu.fit.directors.businessservice.event.UserMessageEvent;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 
@@ -19,7 +20,7 @@ import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 @ParametersAreNonnullByDefault
 public class ChatServiceImpl implements ChatService {
     private static final String CHAT_TOPIC = "chatTopic";
-    private final KafkaTemplate<String, UserMessageEvent> kafkaTemplate;
+    private final KafkaTemplate<String, BusinessMessageEvent> kafkaTemplate;
     private final SecurityService securityService;
     private final OrderService orderService;
     private final SimpMessagingTemplate simpMessagingTemplate;
@@ -29,7 +30,7 @@ public class ChatServiceImpl implements ChatService {
         BusinessUser user = securityService.getLoggedInUser();
         kafkaTemplate.send(
             CHAT_TOPIC,
-            new UserMessageEvent(user.getId(), orderId, messageDto.message())
+            new BusinessMessageEvent(user.getId(), orderId, messageDto.message())
         );
     }
 
