@@ -22,11 +22,9 @@ public class ChatController {
     private final ChatService chatService;
 
     @MessageMapping("/send/{orderId}")
-    @SendTo("/topic/{orderId}")
-    public OutputMessageDto send(@DestinationVariable Long orderId, Message<MessageDto> message) {
+    public void send(@DestinationVariable Long orderId, Message<MessageDto> message) {
         log.info("received order message {}", orderId);
         chatService.save(message.getPayload(), orderId);
-        return new OutputMessageDto("Hello " + orderId + "Ololo", "ololo");
     }
 
     @GetMapping
