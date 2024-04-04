@@ -1,6 +1,7 @@
 package ru.nsu.fit.directors.businessservice.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.businessservice.api.EstablishmentServiceClient;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequest;
@@ -15,6 +16,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @ParametersAreNonnullByDefault
 @RequiredArgsConstructor
@@ -27,9 +29,11 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
     public void createCompanyBranch(CompanyCreateRequest companyCreateRequest) {
         BaseResponse<Long> createdEstablishmentId =
             establishmentClient.createEstablishment(securityService.getLoggedInUser().getId()).getBody();
+        log.info("Created establishment id {}", createdEstablishmentId);
         if (createdEstablishmentId != null) {
             companyBranchRepository.save(
-                new Company().setId(createdEstablishmentId.getResult())
+                new Company()
+                    .setId(createdEstablishmentId.getResult())
                     .setBusinessUser(securityService.getLoggedInUser())
             );
         }
