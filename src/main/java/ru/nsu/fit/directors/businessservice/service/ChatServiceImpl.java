@@ -12,6 +12,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.directors.businessservice.dto.request.MessageDto;
+import ru.nsu.fit.directors.businessservice.dto.response.ResponseMessageDto;
 import ru.nsu.fit.directors.businessservice.event.BusinessMessageEvent;
 import ru.nsu.fit.directors.businessservice.event.UserMessageEvent;
 import ru.nsu.fit.directors.businessservice.exceptions.UserNotLoggedInException;
@@ -48,7 +49,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Nonnull
     @Override
-    public List<MessageDto> getChat(Long orderId) {
+    public List<ResponseMessageDto> getChat(Long orderId) {
         BusinessUser user = securityService.getLoggedInUser();
         return Objects.requireNonNull(orderService.getMessages(user.getId(), orderId));
     }

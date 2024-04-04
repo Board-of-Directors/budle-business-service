@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.nsu.fit.directors.businessservice.dto.BusinessUserLoginRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequest;
-import ru.nsu.fit.directors.businessservice.dto.request.MessageDto;
+import ru.nsu.fit.directors.businessservice.dto.response.ResponseMessageDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseOrderDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
 import ru.nsu.fit.directors.businessservice.service.BusinessUserService;
@@ -45,7 +45,7 @@ public class BusinessUserController {
     }
 
     @GetMapping("/chat/history")
-    public List<MessageDto> getMessages(@RequestParam Long orderId) {
+    public List<ResponseMessageDto> getMessages(@RequestParam Long orderId) {
         return chatService.getChat(orderId);
     }
 

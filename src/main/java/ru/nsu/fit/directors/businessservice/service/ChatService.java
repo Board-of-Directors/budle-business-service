@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import ru.nsu.fit.directors.businessservice.dto.request.MessageDto;
+import ru.nsu.fit.directors.businessservice.dto.response.ResponseMessageDto;
 import ru.nsu.fit.directors.businessservice.event.UserMessageEvent;
 
 @ParametersAreNonnullByDefault
@@ -23,7 +24,7 @@ public interface ChatService {
      * @param orderId идентификатор брони
      */
     @Nonnull
-    List<MessageDto> getChat(Long orderId);
+    List<ResponseMessageDto> getChat(Long orderId);
 
     /**
      * Обработать сообщение от пользователя.

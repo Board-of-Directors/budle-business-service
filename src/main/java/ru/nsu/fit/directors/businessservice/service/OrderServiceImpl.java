@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.businessservice.api.OrderServiceClient;
-import ru.nsu.fit.directors.businessservice.dto.request.MessageDto;
+import ru.nsu.fit.directors.businessservice.dto.response.ResponseMessageDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseOrderDto;
 import ru.nsu.fit.directors.businessservice.event.OrderStatusChangedEvent;
 import ru.nsu.fit.directors.businessservice.exceptions.NotEnoughRightException;
@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<MessageDto> getMessages(Long userId, Long orderId) {
+    public List<ResponseMessageDto> getMessages(Long userId, Long orderId) {
         return orderServiceClient.getMessages(userId, orderId).getBody().getResult();
     }
 }
