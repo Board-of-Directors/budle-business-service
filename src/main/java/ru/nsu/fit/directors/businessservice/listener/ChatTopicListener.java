@@ -14,7 +14,7 @@ import ru.nsu.fit.directors.businessservice.service.ChatService;
 @Component
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
-@KafkaListener(topics = "chatTopic")
+@KafkaListener(topics = "user-chat-topic")
 public class ChatTopicListener {
     private final ChatService chatService;
 

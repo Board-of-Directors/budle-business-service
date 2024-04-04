@@ -24,7 +24,7 @@ import ru.nsu.fit.directors.businessservice.repository.BusinessUserRepository;
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
 public class ChatServiceImpl implements ChatService {
-    private static final String CHAT_TOPIC = "chatTopic";
+    private static final String CHAT_TOPIC = "business-chat-topic";
     private static final String ORDER_TOPIC = "orderTopic";
     private final KafkaTemplate<String, BusinessMessageEvent> kafkaTemplate;
     private final SecurityService securityService;
