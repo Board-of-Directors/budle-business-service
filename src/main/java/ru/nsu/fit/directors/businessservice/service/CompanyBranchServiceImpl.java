@@ -28,9 +28,10 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
     @Override
     public void createCompanyBranch(CompanyCreateRequest companyCreateRequest) {
         BaseResponse<Long> createdEstablishmentId =
-            establishmentClient.createEstablishment(securityService.getLoggedInUser().getId()).getBody();
-        log.info("Created establishment id {}", createdEstablishmentId);
+            establishmentClient.createEstablishment(securityService.getLoggedInUser().getId(), companyCreateRequest)
+                .getBody();
         if (createdEstablishmentId != null) {
+            log.info("Created establishment id {}", createdEstablishmentId.getResult());
             companyBranchRepository.save(
                 new Company()
                     .setId(createdEstablishmentId.getResult())
