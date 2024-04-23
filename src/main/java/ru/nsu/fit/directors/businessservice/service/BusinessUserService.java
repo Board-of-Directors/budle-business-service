@@ -1,9 +1,10 @@
 package ru.nsu.fit.directors.businessservice.service;
 
-
 import ru.nsu.fit.directors.businessservice.dto.BusinessUserLoginRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
+import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -22,4 +23,13 @@ public interface BusinessUserService {
      */
 
     void loginBusinessUser(BusinessUserLoginRequest businessUserLoginRequest);
+
+    /**
+     * Получить бизнес-пользователя по логину.
+     *
+     * @param login логин бизнес-пользователя
+     * @return сущность пользователя
+     */
+    @Nonnull
+    BusinessUser getByLogin(String login);
 }

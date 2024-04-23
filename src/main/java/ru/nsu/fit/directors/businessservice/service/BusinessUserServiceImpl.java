@@ -14,6 +14,7 @@ import ru.nsu.fit.directors.businessservice.mapper.BusinessUserMapper;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.repository.BusinessUserRepository;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @Service
@@ -44,9 +45,15 @@ public class BusinessUserServiceImpl implements BusinessUserService, UserDetails
             .orElseThrow(InvalidCredentialsException::new);
     }
 
+    @Nonnull
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public BusinessUser getByLogin(String username) {
         return businessUserRepository.findBusinessUserByLogin(username)
             .orElseThrow(InvalidCredentialsException::new);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return getByLogin(username);
     }
 }
