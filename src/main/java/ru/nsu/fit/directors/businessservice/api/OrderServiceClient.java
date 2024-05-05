@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.nsu.fit.directors.businessservice.configuration.ClientConfiguration;
+import ru.nsu.fit.directors.businessservice.configuration.CustomErrorDecoderConfiguration;
 import ru.nsu.fit.directors.businessservice.dto.response.BaseResponse;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseMessageDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseOrderDto;
 
-@FeignClient(value = "order-service", configuration = ClientConfiguration.class)
+@FeignClient(
+    value = "order-service",
+    configuration = {ClientConfiguration.class, CustomErrorDecoderConfiguration.class}
+)
 public interface OrderServiceClient {
     @RequestMapping(method = RequestMethod.GET, value = "/order/establishment")
     ResponseEntity<BaseResponse<List<ResponseOrderDto>>> getEstablishmentOrders(@RequestParam Long establishmentId);
