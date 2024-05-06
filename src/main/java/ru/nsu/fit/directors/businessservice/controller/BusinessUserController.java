@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import ru.nsu.fit.directors.businessservice.dto.AuthResponse;
 import ru.nsu.fit.directors.businessservice.dto.BusinessUserLoginRequest;
 import ru.nsu.fit.directors.businessservice.dto.ResponseAuthDto;
@@ -88,6 +90,14 @@ public class BusinessUserController {
     @PostMapping("/company")
     public void create(@RequestBody @Valid CompanyCreateRequest companyCreateRequest) {
         companyBranchService.createCompanyBranch(companyCreateRequest);
+    }
+
+    @PostMapping("v2/company")
+    public void create(
+        @RequestPart(name = "request") @Valid CompanyCreateRequest companyCreateRequest,
+        @RequestPart(name = "images") MultipartFile[] images
+    ) {
+        companyBranchService.createCompanyBranch(companyCreateRequest, images);
     }
 
     @GetMapping(value = "/establishments")

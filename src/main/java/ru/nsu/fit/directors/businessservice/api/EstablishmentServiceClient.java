@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import ru.nsu.fit.directors.businessservice.configuration.ClientConfiguration;
 import ru.nsu.fit.directors.businessservice.configuration.CustomErrorDecoderConfiguration;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequest;
@@ -24,6 +26,13 @@ public interface EstablishmentServiceClient {
     ResponseEntity<BaseResponse<Long>> createEstablishment(
         @RequestParam Long ownerId,
         @RequestBody CompanyCreateRequest companyCreateRequest
+    );
+
+    @RequestMapping(method = RequestMethod.POST, value = "/internal/establishment/v2/create", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    ResponseEntity<BaseResponse<Long>> createEstablishmentV2(
+        @RequestParam Long ownerId,
+        @RequestPart(name = "establishment") CompanyCreateRequest companyCreateRequest,
+        @RequestPart(name = "images") MultipartFile[] images
     );
 
     @RequestMapping(method = RequestMethod.GET, value = "/internal/establishment/owner", produces = MediaType.APPLICATION_JSON_VALUE)
