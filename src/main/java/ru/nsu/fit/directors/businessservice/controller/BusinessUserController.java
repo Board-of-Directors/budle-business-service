@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import ru.nsu.fit.directors.businessservice.dto.AuthResponse;
 import ru.nsu.fit.directors.businessservice.dto.BusinessUserLoginRequest;
 import ru.nsu.fit.directors.businessservice.dto.ResponseAuthDto;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequest;
+import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseMessageDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseOrderDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
@@ -93,11 +92,8 @@ public class BusinessUserController {
     }
 
     @PostMapping("v2/company")
-    public void create(
-        @RequestPart(name = "request") @Valid CompanyCreateRequest companyCreateRequest,
-        @RequestPart(name = "images") MultipartFile[] images
-    ) {
-        companyBranchService.createCompanyBranch(companyCreateRequest, images);
+    public void create(@RequestBody @Valid CompanyCreateRequestV2 companyCreateRequest) {
+        companyBranchService.createCompanyBranch(companyCreateRequest);
     }
 
     @GetMapping(value = "/establishments")

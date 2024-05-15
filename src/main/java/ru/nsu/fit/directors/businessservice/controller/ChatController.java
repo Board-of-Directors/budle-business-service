@@ -1,15 +1,11 @@
 package ru.nsu.fit.directors.businessservice.controller;
 
-import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.nsu.fit.directors.businessservice.dto.request.MessageDto;
 import ru.nsu.fit.directors.businessservice.service.ChatService;
 

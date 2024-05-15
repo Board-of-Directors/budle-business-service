@@ -2,10 +2,11 @@ package ru.nsu.fit.directors.businessservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import ru.nsu.fit.directors.businessservice.api.EstablishmentServiceClient;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequest;
+import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
 import ru.nsu.fit.directors.businessservice.dto.response.BaseResponse;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
@@ -17,6 +18,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -44,14 +46,12 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
     }
 
     @Override
-    public void createCompanyBranch(CompanyCreateRequest companyCreateRequest, MultipartFile[] images) {
-        BaseResponse<Long> createdEstablishmentId =
-            establishmentClient.createEstablishmentV2(
-                    securityService.getLoggedInUser().getId(),
-                    companyCreateRequest,
-                    images
-                )
-                .getBody();
+    public void createCompanyBranch(CompanyCreateRequestV2 companyCreateRequest) {
+        BaseResponse<Long> createdEstablishmentId = establishmentClient.createEstablishmentV2(
+                securityService.getLoggedInUser().getId(),
+                companyCreateRequest
+            )
+            .getBody();
         if (createdEstablishmentId != null) {
             log.info("Created establishment id {}", createdEstablishmentId.getResult());
             companyBranchRepository.save(
@@ -66,6 +66,9 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
     @Override
     public List<ResponseShortEstablishmentInfo> getEstablishmentsByOwner(@Nullable String name) {
         BusinessUser user = securityService.getLoggedInUser();
-        return establishmentClient.getEstablishmentsByOwner(user.getId()).getBody().getResult();
+        return Optional.ofNullable(establishmentClient.getEstablishmentsByOwner(user.getId()))
+            .map(ResponseEntity::getBody)
+            .map(BaseResponse::getResult)
+            .orElseGet(List::of);
     }
 }

@@ -1,7 +1,7 @@
 package ru.nsu.fit.directors.businessservice.service;
 
-import org.springframework.web.multipart.MultipartFile;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequest;
+import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
 
 import javax.annotation.Nonnull;
@@ -22,9 +22,8 @@ public interface CompanyBranchService {
      * Создать филиал заведения.
      *
      * @param companyCreateRequest запрос создания
-     * @param images               фотографии заведения
      */
-    void createCompanyBranch(CompanyCreateRequest companyCreateRequest, MultipartFile[] images);
+    void createCompanyBranch(CompanyCreateRequestV2 companyCreateRequest);
 
     /**
      * Получить список заведений, принадлежащих создателю.
