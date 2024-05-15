@@ -37,7 +37,7 @@ public class MenuController {
     }
 
     @Operation(description = "Удалить товар из меню")
-    @DeleteMapping
+    @DeleteMapping(value = "/product")
     public void deleteProduct(@RequestParam Long productId){
         menuFacade.deleteProduct(productId);
     }
