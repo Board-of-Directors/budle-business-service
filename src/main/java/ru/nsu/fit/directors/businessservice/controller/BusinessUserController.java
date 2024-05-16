@@ -1,6 +1,5 @@
 package ru.nsu.fit.directors.businessservice.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -28,7 +27,6 @@ import ru.nsu.fit.directors.businessservice.service.BusinessUserService;
 import ru.nsu.fit.directors.businessservice.service.ChatService;
 import ru.nsu.fit.directors.businessservice.service.CompanyBranchService;
 import ru.nsu.fit.directors.businessservice.service.OrderService;
-import ru.nsu.fit.directors.businessservice.service.SecurityService;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -43,8 +41,6 @@ import java.util.List;
 public class BusinessUserController {
     private final BusinessUserService businessUserService;
     private final CompanyBranchService companyBranchService;
-    private final HttpServletRequest httpServletRequest;
-    private final SecurityService securityService;
     private final OrderService orderService;
     private final ChatService chatService;
     private final UserFacade userFacade;
@@ -62,18 +58,7 @@ public class BusinessUserController {
 
     @GetMapping(value = "/me")
     public Long me() {
-        return securityService.getLoggedInUser().getId();
-    }
-
-    @PostMapping(value = "/login")
-    public boolean login(@RequestBody @Valid BusinessUserLoginRequest businessUserLoginRequest) {
-        businessUserService.loginBusinessUser(businessUserLoginRequest);
-        securityService.autoLogin(
-            businessUserLoginRequest.login(),
-            businessUserLoginRequest.password(),
-            httpServletRequest
-        );
-        return true;
+        return jwtTokenRepository.getUserIdOrThrow();
     }
 
     @PostMapping(value = "/login/jwt", consumes = MediaType.APPLICATION_JSON_VALUE)

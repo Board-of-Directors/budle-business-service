@@ -1,12 +1,19 @@
 package ru.nsu.fit.directors.businessservice.service;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 
+@ParametersAreNonnullByDefault
 public interface SecurityService {
 
+    /**
+     * Получить активного пользователя.
+     *
+     * @return пользователь
+     */
+    @Nonnull
     BusinessUser getLoggedInUser();
-
-    void autoLogin(String username, String password, HttpServletRequest request);
 
 }
