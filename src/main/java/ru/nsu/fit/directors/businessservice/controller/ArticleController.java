@@ -21,13 +21,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.nsu.fit.directors.businessservice.dto.response.BaseResponse;
-import ru.nsu.fit.directors.businessservice.exceptions.AlreadyRegisteredException;
 import ru.nsu.fit.directors.businessservice.exceptions.BaseException;
-import ru.nsu.fit.directors.businessservice.exceptions.ClientException;
-import ru.nsu.fit.directors.businessservice.exceptions.InvalidCredentialsException;
-import ru.nsu.fit.directors.businessservice.exceptions.NotEnoughRightException;
-import ru.nsu.fit.directors.businessservice.exceptions.ServerNotAvailableException;
-import ru.nsu.fit.directors.businessservice.exceptions.UserNotLoggedInException;
 
 import java.util.LinkedHashMap;
 
@@ -35,15 +29,8 @@ import java.util.LinkedHashMap;
 public class ArticleController extends ResponseEntityExceptionHandler implements ResponseBodyAdvice<Object> {
     private static final String NOT_VALID_EXCEPTION = "notValidException";
 
-    @ExceptionHandler({
-        UserNotLoggedInException.class,
-        NotEnoughRightException.class,
-        InvalidCredentialsException.class,
-        ServerNotAvailableException.class,
-        ClientException.class,
-        AlreadyRegisteredException.class
-    })
-    public <T extends BaseException> ResponseEntity<BaseResponse<Object>> handleException(T e) {
+    @ExceptionHandler(BaseException.class)
+    public ResponseEntity<BaseResponse<Object>> handleException(BaseException e) {
         BaseResponse<Object> response = new BaseResponse<>(e.getMessage(), e.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -98,7 +85,6 @@ public class ArticleController extends ResponseEntityExceptionHandler implements
         BaseResponse<Object> response = new BaseResponse<>(message, NOT_VALID_EXCEPTION);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 
     @NonNull
     private String getDefaultMessage(BindException ex) {
