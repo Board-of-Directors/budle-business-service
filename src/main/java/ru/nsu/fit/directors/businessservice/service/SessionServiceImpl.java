@@ -25,8 +25,9 @@ public class SessionServiceImpl implements SessionService {
         log.info("createSession: start create session");
         var sessionOpt = sessionRepository.findByUser(user);
 
-        if (sessionOpt.isPresent())
+        if (sessionOpt.isPresent()) {
             return updateSession(sessionOpt.get(), refreshToken);
+        }
 
         return sessionRepository.save(new Session()
             .setUser(user)
@@ -46,6 +47,6 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public Optional<Session> findSessionByUuid(String tokenUuid) {
-        return this.sessionRepository.findByRefreshTokenUuid(tokenUuid);
+        return sessionRepository.findByRefreshTokenUuid(tokenUuid);
     }
 }

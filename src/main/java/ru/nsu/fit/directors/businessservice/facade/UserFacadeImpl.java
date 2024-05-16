@@ -36,9 +36,11 @@ public class UserFacadeImpl implements UserFacade {
         if (!passwordEncoder.matches(userCredentials.password(), user.getPassword())) {
             throw new UnauthorizedException("Не вошел в аккаунт", "Не вошел в аккаунт");
         }
+        RefreshToken refreshToken = jwtTokenProvider.createRefreshToken(userCredentials.login());
+        sessionService.createSession(user, refreshToken);
         return new AuthResponse(
             jwtTokenProvider.createAccessToken(userCredentials.login(), user, 1234L),
-            jwtTokenProvider.createRefreshToken(userCredentials.login()).getToken()
+            refreshToken.getToken()
         );
     }
 
@@ -61,14 +63,13 @@ public class UserFacadeImpl implements UserFacade {
         log.info("refresh authentication response dto");
         String username = claims.getUsername();
 
-        RefreshToken newRefreshTokenInfo = jwtTokenProvider.createRefreshToken(username);
+        RefreshToken refreshToken = jwtTokenProvider.createRefreshToken(username);
         BusinessUser user = session.getUser();
         String newAccessToken = jwtTokenProvider.createAccessToken(username, user, session.getId());
-
-        sessionService.updateSession(session, newRefreshTokenInfo);
+        sessionService.updateSession(session, refreshToken);
         return AuthResponse.builder()
             .accessToken(newAccessToken)
-            .refreshToken(newRefreshTokenInfo.getToken())
+            .refreshToken(refreshToken.getToken())
             .build();
     }
 }
