@@ -24,6 +24,7 @@ public class CustomErrorDecoderConfiguration implements ErrorDecoder {
 
     @Override
     public Exception decode(String methodKey, Response response) {
+        log.error("Catch response from API : {}", response);
         return switch (response.status()) {
             case 400, 403, 404 -> {
                 try {
