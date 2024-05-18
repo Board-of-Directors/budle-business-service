@@ -38,15 +38,15 @@ public interface EstablishmentServiceClient {
     @RequestMapping(method = RequestMethod.GET, value = "/internal/establishment/owner", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<BaseResponse<List<ResponseShortEstablishmentInfo>>> getEstablishmentsByOwner(@RequestParam Long ownerId);
 
-    @RequestMapping(method = RequestMethod.POST, value = "/internal/establishment/menu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/internal/menu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     void add(@RequestBody RequestCategoryDto category);
 
-    @RequestMapping(method = RequestMethod.POST, value = "/internal/establishment/menu/product", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/internal/menu/product", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     void addProduct(@RequestBody RequestProductDto product);
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/internal/establishment/menu", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.DELETE, value = "/internal/menu", produces = MediaType.APPLICATION_JSON_VALUE)
     void deleteCategory(@RequestParam long categoryId);
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/internal/establishment/menu/product", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.DELETE, value = "/internal/menu/product", produces = MediaType.APPLICATION_JSON_VALUE)
     void deleteProduct(@RequestParam long productId);
 }
