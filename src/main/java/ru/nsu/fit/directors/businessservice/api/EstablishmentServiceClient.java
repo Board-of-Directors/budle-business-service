@@ -29,7 +29,7 @@ public interface EstablishmentServiceClient {
         @RequestBody CompanyCreateRequest companyCreateRequest
     );
 
-    @RequestMapping(method = RequestMethod.POST, value = "/internal/establishment/v2/create", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/internal/establishment/v2/create")
     ResponseEntity<BaseResponse<Long>> createEstablishmentV2(
         @RequestParam Long ownerId,
         @RequestBody CompanyCreateRequestV2 companyCreateRequest
