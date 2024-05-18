@@ -6,12 +6,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.directors.businessservice.dto.response.BaseResponse;
 import ru.nsu.fit.directors.businessservice.exceptions.BaseException;
 import ru.nsu.fit.directors.businessservice.exceptions.ClientException;
 import ru.nsu.fit.directors.businessservice.exceptions.ServerNotAvailableException;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CustomErrorDecoderConfiguration implements ErrorDecoder {
@@ -28,6 +30,7 @@ public class CustomErrorDecoderConfiguration implements ErrorDecoder {
                     );
                     yield new ClientException(baseResponse.getException().getMessage());
                 } catch (IOException e) {
+                    log.error("Uncaught client exception {}", e.getMessage());
                     yield new ClientException();
                 }
             }
