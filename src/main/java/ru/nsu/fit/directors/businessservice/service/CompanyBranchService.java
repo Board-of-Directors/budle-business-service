@@ -2,6 +2,7 @@ package ru.nsu.fit.directors.businessservice.service;
 
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
+import ru.nsu.fit.directors.businessservice.model.Company;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -41,4 +42,18 @@ public interface CompanyBranchService {
      * @param changeRequest   данные компании
      */
     void changeCompany(Long establishmentId, CompanyCreateRequestV2 changeRequest);
+
+    /**
+     * Получить компанию по идентификатору.
+     * @param id идентификатор компании
+     * @return компания
+     */
+    @Nonnull
+    Company getById(Long id);
+
+    /**
+     * Сохранить компанию.
+     * @param company компания
+     */
+    void save(Company company);
 }

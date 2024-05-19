@@ -8,8 +8,10 @@ import ru.nsu.fit.directors.businessservice.api.EstablishmentServiceClient;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
 import ru.nsu.fit.directors.businessservice.dto.response.BaseResponse;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
+import ru.nsu.fit.directors.businessservice.exceptions.EntityNotFoundException;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.model.Company;
+import ru.nsu.fit.directors.businessservice.model.EntityType;
 import ru.nsu.fit.directors.businessservice.repository.CompanyBranchRepository;
 
 import javax.annotation.Nonnull;
@@ -29,21 +31,20 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
     private final EstablishmentServiceClient establishmentClient;
 
     @Override
-    public void createCompanyBranch(CompanyCreateRequestV2 companyCreateRequest) {
+    public void createCompanyBranch(CompanyCreateRequestV2 createRequest) {
         BusinessUser businessUser = employeeService.getLoggedInUser();
-        BaseResponse<Long> createdEstablishmentId = establishmentClient.createEstablishmentV2(
-                businessUser.getId(),
-                companyCreateRequest
-            )
-            .getBody();
-        if (createdEstablishmentId != null) {
-            log.info("Created establishment id {}", createdEstablishmentId.getResult());
-            companyBranchRepository.save(
-                new Company()
-                    .setId(createdEstablishmentId.getResult())
-                    .setBusinessUser(businessUser)
-            );
-        }
+        Optional.ofNullable(establishmentClient.createEstablishmentV2(businessUser.getId(), createRequest))
+            .map(ResponseEntity::getBody)
+            .ifPresent(id -> create(id, businessUser));
+    }
+
+    private void create(BaseResponse<Long> createdEstablishmentId, BusinessUser businessUser) {
+        log.info("Created establishment id {}", createdEstablishmentId.getResult());
+        companyBranchRepository.save(
+            new Company()
+                .setId(createdEstablishmentId.getResult())
+                .setBusinessUser(businessUser)
+        );
     }
 
     @Nonnull
@@ -58,14 +59,28 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
 
     @Override
     public void deleteCompany(Long establishmentId) {
-        employeeService.validateWorker(establishmentId, false);
+        Company company = getById(establishmentId);
+        employeeService.validateWorker(company.getId(), false);
         establishmentClient.deleteEstablishment(establishmentId);
         companyBranchRepository.deleteById(establishmentId);
     }
 
     @Override
     public void changeCompany(Long establishmentId, CompanyCreateRequestV2 changeRequest) {
-        employeeService.validateWorker(establishmentId, false);
+        Company company = getById(establishmentId);
+        employeeService.validateWorker(company.getId(), false);
         establishmentClient.update(establishmentId, changeRequest);
+    }
+
+    @Nonnull
+    @Override
+    public Company getById(Long id) {
+        return companyBranchRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(EntityType.COMPANY, id));
+    }
+
+    @Override
+    public void save(Company company) {
+        companyBranchRepository.save(company);
     }
 }
