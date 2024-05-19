@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.nsu.fit.directors.businessservice.configuration.ClientConfiguration;
 import ru.nsu.fit.directors.businessservice.configuration.CustomErrorDecoderConfiguration;
-import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestCategoryDto;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestProductDto;
@@ -23,11 +22,6 @@ import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishm
     configuration = {ClientConfiguration.class, CustomErrorDecoderConfiguration.class}
 )
 public interface EstablishmentServiceClient {
-    @RequestMapping(method = RequestMethod.POST, value = "/internal/establishment", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<BaseResponse<Long>> createEstablishment(
-        @RequestParam Long ownerId,
-        @RequestBody CompanyCreateRequest companyCreateRequest
-    );
 
     @RequestMapping(method = RequestMethod.POST, value = "/internal/establishment/v2/create", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<BaseResponse<Long>> createEstablishmentV2(

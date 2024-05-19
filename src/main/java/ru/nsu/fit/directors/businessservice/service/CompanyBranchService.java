@@ -1,6 +1,5 @@
 package ru.nsu.fit.directors.businessservice.service;
 
-import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
 
@@ -11,12 +10,6 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public interface CompanyBranchService {
-    /**
-     * Создать филиал заведения.
-     *
-     * @param companyCreateRequest запрос создания
-     */
-    void createCompanyBranch(CompanyCreateRequest companyCreateRequest);
 
     /**
      * Создать филиал заведения.

@@ -1,5 +1,7 @@
 package ru.nsu.fit.directors.businessservice.mapper;
 
+import javax.annotation.Nonnull;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -13,6 +15,7 @@ import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 public class BusinessUserMapper {
     private final PasswordEncoder passwordEncoder;
 
+    @Nonnull
     public BusinessUser toBusinessUser(BusinessUserRegisterRequest registerRequest, String password) {
         String[] names = registerRequest.name().split(" ");
         String login = registerRequest.email().split("@")[0];
@@ -27,6 +30,7 @@ public class BusinessUserMapper {
 
     }
 
+    @Nonnull
     public BusinessUser toBusinessUser(RequestWorkerDto workerDto, String password) {
         String[] names = workerDto.name().split(" ");
         String login = workerDto.email().split("@")[0];

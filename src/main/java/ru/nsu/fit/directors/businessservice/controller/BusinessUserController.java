@@ -16,7 +16,6 @@ import ru.nsu.fit.directors.businessservice.dto.AuthResponse;
 import ru.nsu.fit.directors.businessservice.dto.BusinessUserLoginRequest;
 import ru.nsu.fit.directors.businessservice.dto.ResponseAuthDto;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
-import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseMessageDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseOrderDto;
@@ -69,11 +68,6 @@ public class BusinessUserController {
     @PostMapping(value = "/refresh")
     public ResponseEntity<ResponseAuthDto> refreshJwt(@CookieValue(name = "refreshToken") String refreshToken) {
         return ResponseEntity.ok(createResponseAuthDto(userFacade.refreshToken(refreshToken)));
-    }
-
-    @PostMapping("/company")
-    public void create(@RequestBody @Valid CompanyCreateRequest companyCreateRequest) {
-        companyBranchService.createCompanyBranch(companyCreateRequest);
     }
 
     @PostMapping("v2/company")

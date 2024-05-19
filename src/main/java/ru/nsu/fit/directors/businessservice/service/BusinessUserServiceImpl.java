@@ -3,7 +3,6 @@ package ru.nsu.fit.directors.businessservice.service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.stereotype.Service;
-import ru.nsu.fit.directors.businessservice.dto.BusinessUserLoginRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
 import ru.nsu.fit.directors.businessservice.exceptions.AlreadyRegisteredException;
 import ru.nsu.fit.directors.businessservice.exceptions.InvalidCredentialsException;
@@ -34,12 +33,6 @@ public class BusinessUserServiceImpl implements BusinessUserService {
         BusinessUser businessUser = businessUserMapper.toBusinessUser(businessUserRegisterRequest, password);
         businessUserRepository.save(businessUser);
         notificationService.sendRegistrationNotification(businessUser, password);
-    }
-
-    @Override
-    public void loginBusinessUser(BusinessUserLoginRequest businessUserLoginRequest) {
-        businessUserRepository.findBusinessUserByLogin(businessUserLoginRequest.login())
-            .orElseThrow(InvalidCredentialsException::new);
     }
 
     @Nonnull

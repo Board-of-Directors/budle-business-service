@@ -3,13 +3,6 @@ package ru.nsu.fit.directors.businessservice.exceptions;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Class, that represent base exception in our system.
- * Modified version of runtime exception.
- * Additional field - exception type.
- * Exception type - is the short name of exception.
- * For example: InvalidDataException
- */
 @Getter
 @Setter
 public class BaseException extends RuntimeException {
