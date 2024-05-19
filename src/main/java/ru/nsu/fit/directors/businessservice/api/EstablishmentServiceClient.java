@@ -45,5 +45,5 @@ public interface EstablishmentServiceClient {
     void deleteProduct(@RequestParam long productId);
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/internal/establishment")
-    void deleteEstablishment(Long establishmentId);
+    void deleteEstablishment(@RequestParam  Long establishmentId);
 }
