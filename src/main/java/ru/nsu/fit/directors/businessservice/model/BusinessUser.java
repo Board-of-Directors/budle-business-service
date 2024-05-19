@@ -11,8 +11,11 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import ru.nsu.fit.directors.businessservice.exceptions.WrongNameFormatException;
 
 import java.util.List;
+
+import javax.annotation.Nonnull;
 
 @Entity
 @Table(name = "business_user")
@@ -34,4 +37,16 @@ public class BusinessUser {
     private List<Company> companies;
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "workers")
     private List<Company> workerInCompanies;
+
+    @Nonnull
+    public BusinessUser setFullName(String fullName) {
+        String[] names = fullName.split(" ");
+        if (names.length != 3) {
+            throw new WrongNameFormatException();
+        }
+        this.middleName = names[0];
+        this.firstName = names[1];
+        this.lastName = names[2];
+        return this;
+    }
 }

@@ -1,11 +1,14 @@
 package ru.nsu.fit.directors.businessservice.mapper;
 
+import java.util.Optional;
+
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import ru.nsu.fit.directors.businessservice.dto.ChangeBusinessUserRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestWorkerDto;
 import ru.nsu.fit.directors.businessservice.dto.response.BusinessUserCredentialsResponse;
@@ -20,12 +23,9 @@ public class BusinessUserMapper {
 
     @Nonnull
     public BusinessUser toBusinessUser(BusinessUserRegisterRequest registerRequest, String password) {
-        String[] names = registerRequest.name().split(" ");
         String login = registerRequest.email().split("@")[0];
         return new BusinessUser()
-            .setMiddleName(names[0])
-            .setFirstName(names[1])
-            .setLastName(names[2])
+            .setFullName(registerRequest.name())
             .setEmail(registerRequest.email())
             .setPhoneNumber(registerRequest.phoneNumber())
             .setPassword(passwordEncoder.encode(password))
@@ -35,12 +35,9 @@ public class BusinessUserMapper {
 
     @Nonnull
     public BusinessUser toBusinessUser(RequestWorkerDto workerDto, String password) {
-        String[] names = workerDto.name().split(" ");
         String login = workerDto.email().split("@")[0];
         return new BusinessUser()
-            .setMiddleName(names[0])
-            .setFirstName(names[1])
-            .setLastName(names[2])
+            .setFullName(workerDto.name())
             .setEmail(workerDto.email())
             .setPassword(passwordEncoder.encode(password))
             .setLogin(login);
@@ -67,5 +64,11 @@ public class BusinessUserMapper {
             .phoneNumber(businessUser.getPhoneNumber())
             .login(businessUser.getLogin())
             .build();
+    }
+
+    public void updateModel(BusinessUser businessUser, ChangeBusinessUserRequest changeBusinessUserRequest) {
+        Optional.ofNullable(changeBusinessUserRequest.email()).ifPresent(businessUser::setEmail);
+        Optional.ofNullable(changeBusinessUserRequest.phoneNumber()).ifPresent(businessUser::setPhoneNumber);
+        Optional.ofNullable(changeBusinessUserRequest.fullName()).ifPresent(businessUser::setFullName);
     }
 }

@@ -32,4 +32,11 @@ public interface BusinessUserService {
      */
     @Nonnull
     BusinessUser getById(Long businessUserId);
+
+    /**
+     * Сохранить пользователя.
+     *
+     * @param businessUser пользователь
+     */
+    void save(BusinessUser businessUser);
 }

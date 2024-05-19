@@ -5,6 +5,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.nsu.fit.directors.businessservice.dto.ChangeBusinessUserRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
 import ru.nsu.fit.directors.businessservice.dto.response.BusinessUserCredentialsResponse;
 import ru.nsu.fit.directors.businessservice.mapper.BusinessUserMapper;
@@ -31,5 +32,13 @@ public class BusinessUserFacadeImpl implements BusinessUserFacade {
         Long businessUserId = jwtTokenRepository.getUserIdOrThrow();
         BusinessUser businessUser = businessUserService.getById(businessUserId);
         return businessUserMapper.toResponse(businessUser);
+    }
+
+    @Override
+    public void changeBusinessUser(ChangeBusinessUserRequest changeBusinessUserRequest) {
+        Long businessUserId = jwtTokenRepository.getUserIdOrThrow();
+        BusinessUser businessUser = businessUserService.getById(businessUserId);
+        businessUserMapper.updateModel(businessUser, changeBusinessUserRequest);
+        businessUserService.save(businessUser);
     }
 }

@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nsu.fit.directors.businessservice.dto.AuthResponse;
 import ru.nsu.fit.directors.businessservice.dto.BusinessUserLoginRequest;
+import ru.nsu.fit.directors.businessservice.dto.ChangeBusinessUserRequest;
 import ru.nsu.fit.directors.businessservice.dto.ResponseAuthDto;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
@@ -50,6 +52,11 @@ public class BusinessUserController {
     @PostMapping(value = "/registration")
     public void register(@RequestBody @Valid BusinessUserRegisterRequest businessUserRegisterRequest) {
         businessUserFacade.register(businessUserRegisterRequest);
+    }
+
+    @PutMapping(value = "/change")
+    public void change(@RequestBody @Valid ChangeBusinessUserRequest changeBusinessUserRequest) {
+        businessUserFacade.changeBusinessUser(changeBusinessUserRequest);
     }
 
     @GetMapping("/chat/history")

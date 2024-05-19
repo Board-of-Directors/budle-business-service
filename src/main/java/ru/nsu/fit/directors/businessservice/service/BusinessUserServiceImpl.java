@@ -50,4 +50,9 @@ public class BusinessUserServiceImpl implements BusinessUserService {
         return businessUserRepository.findById(businessUserId)
             .orElseThrow(() -> new EntityNotFoundException(EntityType.BUSINESS_USER, businessUserId));
     }
+
+    @Override
+    public void save(BusinessUser businessUser) {
+        businessUserRepository.save(businessUser);
+    }
 }
