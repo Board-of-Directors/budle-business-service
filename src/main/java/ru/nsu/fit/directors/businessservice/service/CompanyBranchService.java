@@ -33,4 +33,12 @@ public interface CompanyBranchService {
      * @param establishmentId идентификатор компании
      */
     void deleteCompany(Long establishmentId);
+
+    /**
+     * Изменить данные компании.
+     *
+     * @param establishmentId идентификатор компании
+     * @param changeRequest   данные компании
+     */
+    void changeCompany(Long establishmentId, CompanyCreateRequestV2 changeRequest);
 }

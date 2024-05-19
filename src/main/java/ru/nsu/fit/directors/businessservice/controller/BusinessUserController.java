@@ -89,6 +89,11 @@ public class BusinessUserController {
         companyBranchService.deleteCompany(establishmentId);
     }
 
+    @PutMapping("/v2/company")
+    public void change(@RequestParam Long establishmentId, CompanyCreateRequestV2 changeRequest){
+        companyBranchService.changeCompany(establishmentId, changeRequest);
+    }
+
     @GetMapping(value = "/establishments")
     public List<ResponseShortEstablishmentInfo> ownerEstablishments(
         @RequestParam(required = false) String name

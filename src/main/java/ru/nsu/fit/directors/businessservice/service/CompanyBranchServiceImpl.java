@@ -58,8 +58,14 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
 
     @Override
     public void deleteCompany(Long establishmentId) {
-        employeeService.validateWorker(establishmentId);
+        employeeService.validateWorker(establishmentId, false);
         establishmentClient.deleteEstablishment(establishmentId);
         companyBranchRepository.deleteById(establishmentId);
+    }
+
+    @Override
+    public void changeCompany(Long establishmentId, CompanyCreateRequestV2 changeRequest) {
+        employeeService.validateWorker(establishmentId, false);
+        establishmentClient.update(establishmentId, changeRequest);
     }
 }

@@ -46,4 +46,7 @@ public interface EstablishmentServiceClient {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/internal/establishment")
     void deleteEstablishment(@RequestParam  Long establishmentId);
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/internal/establishment")
+    void update(@RequestParam Long establishmentId, @RequestBody CompanyCreateRequestV2 establishmentDto);
 }
