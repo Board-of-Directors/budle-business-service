@@ -9,15 +9,19 @@ import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
 import ru.nsu.fit.directors.businessservice.dto.response.BaseResponse;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
 import ru.nsu.fit.directors.businessservice.exceptions.EntityNotFoundException;
+import ru.nsu.fit.directors.businessservice.model.AvailableOption;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.model.Company;
 import ru.nsu.fit.directors.businessservice.model.EntityType;
+import ru.nsu.fit.directors.businessservice.model.Option;
+import ru.nsu.fit.directors.businessservice.repository.AvailableOptionRepository;
 import ru.nsu.fit.directors.businessservice.repository.CompanyBranchRepository;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +33,7 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
     private final EmployeeService employeeService;
     private final CompanyBranchRepository companyBranchRepository;
     private final EstablishmentServiceClient establishmentClient;
+    private final AvailableOptionRepository availableOptionRepository;
 
     @Override
     public void createCompanyBranch(CompanyCreateRequestV2 createRequest) {
@@ -40,11 +45,15 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
 
     private void create(BaseResponse<Long> createdEstablishmentId, BusinessUser businessUser) {
         log.info("Created establishment id {}", createdEstablishmentId.getResult());
-        companyBranchRepository.save(
+        Company company = companyBranchRepository.save(
             new Company()
                 .setId(createdEstablishmentId.getResult())
                 .setBusinessUser(businessUser)
         );
+        var availableOptions = Arrays.stream(Option.values())
+            .map(option -> new AvailableOption().setCompany(company).setBusinessUser(businessUser).setOption(option))
+            .toList();
+        availableOptionRepository.saveAll(availableOptions);
     }
 
     @Nonnull
