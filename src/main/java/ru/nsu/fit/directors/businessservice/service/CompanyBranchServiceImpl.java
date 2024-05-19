@@ -50,7 +50,7 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
     @Override
     public List<ResponseShortEstablishmentInfo> getEstablishmentsByOwner(@Nullable String name) {
         BusinessUser user = securityService.getLoggedInUser();
-        return Optional.ofNullable(establishmentClient.getEstablishmentsByOwner(user.getId()))
+        return Optional.ofNullable(establishmentClient.getEstablishmentsByOwner(user.getId(), name))
             .map(ResponseEntity::getBody)
             .map(BaseResponse::getResult)
             .orElseGet(List::of);

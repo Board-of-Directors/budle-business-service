@@ -30,7 +30,7 @@ public interface EstablishmentServiceClient {
     );
 
     @RequestMapping(method = RequestMethod.GET, value = "/internal/establishment/owner", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<BaseResponse<List<ResponseShortEstablishmentInfo>>> getEstablishmentsByOwner(@RequestParam Long ownerId);
+    ResponseEntity<BaseResponse<List<ResponseShortEstablishmentInfo>>> getEstablishmentsByOwner(@RequestParam Long ownerId, @RequestParam String name);
 
     @RequestMapping(method = RequestMethod.POST, value = "/internal/menu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     void add(@RequestBody RequestCategoryDto category);
