@@ -17,19 +17,23 @@ public interface MenuFacade {
     /**
      * Удалить категорию из меню.
      *
-     * @param categoryId идентификатор категории
+     * @param establishmentId идентификатор заведения
+     * @param categoryId      идентификатор категории
      */
-    void deleteCategory(Long categoryId);
+    void deleteCategory(Long establishmentId, Long categoryId);
 
     /**
      * Добавить продукт в меню.
+     *
      * @param requestProductDto информация о продукте
      */
     void addProduct(RequestProductDto requestProductDto);
 
     /**
      * Удалить продукт из меню.
-     * @param productId идентификатор продукта
+     *
+     * @param establishmentId идентификатор заведения
+     * @param productId       идентификатор продукта
      */
-    void deleteProduct(Long productId);
+    void deleteProduct(Long establishmentId, Long productId);
 }

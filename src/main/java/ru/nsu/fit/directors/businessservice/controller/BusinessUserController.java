@@ -26,7 +26,7 @@ import ru.nsu.fit.directors.businessservice.security.JwtTokenRepository;
 import ru.nsu.fit.directors.businessservice.service.BusinessUserService;
 import ru.nsu.fit.directors.businessservice.service.ChatService;
 import ru.nsu.fit.directors.businessservice.service.CompanyBranchService;
-import ru.nsu.fit.directors.businessservice.service.OrderService;
+import ru.nsu.fit.directors.businessservice.service.OrderFacade;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -41,7 +41,7 @@ import java.util.List;
 public class BusinessUserController {
     private final BusinessUserService businessUserService;
     private final CompanyBranchService companyBranchService;
-    private final OrderService orderService;
+    private final OrderFacade orderFacade;
     private final ChatService chatService;
     private final UserFacade userFacade;
     private final JwtTokenRepository jwtTokenRepository;
@@ -90,7 +90,7 @@ public class BusinessUserController {
 
     @GetMapping(value = "/orders")
     public List<ResponseOrderDto> getOrders(@RequestParam Long establishmentId) {
-        return orderService.getOrdersByEstablishment(establishmentId);
+        return orderFacade.getOrdersByEstablishment(establishmentId);
     }
 
     @PostMapping(value = "/order")
@@ -99,7 +99,7 @@ public class BusinessUserController {
         @RequestParam Long establishmentId,
         @RequestParam int status
     ) {
-        orderService.setOrderStatus(orderId, establishmentId, status);
+        orderFacade.setOrderStatus(orderId, establishmentId, status);
     }
 
     @Nonnull

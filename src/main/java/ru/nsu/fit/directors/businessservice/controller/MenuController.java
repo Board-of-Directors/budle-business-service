@@ -26,8 +26,8 @@ public class MenuController {
 
     @Operation(description = "Удалить категорию из меню")
     @DeleteMapping
-    public void deleteCategory(@RequestParam Long categoryId) {
-        menuFacade.deleteCategory(categoryId);
+    public void deleteCategory(@RequestParam Long establishmentId, @RequestParam Long categoryId) {
+        menuFacade.deleteCategory(establishmentId, categoryId);
     }
 
     @Operation(description = "Добавить товар в меню")
@@ -38,7 +38,7 @@ public class MenuController {
 
     @Operation(description = "Удалить товар из меню")
     @DeleteMapping(value = "/product")
-    public void deleteProduct(@RequestParam Long productId){
-        menuFacade.deleteProduct(productId);
+    public void deleteProduct(@RequestParam Long establishmentId, @RequestParam Long productId) {
+        menuFacade.deleteProduct(establishmentId, productId);
     }
 }

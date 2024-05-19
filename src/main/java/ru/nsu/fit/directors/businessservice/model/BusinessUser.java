@@ -35,7 +35,7 @@ public class BusinessUser implements UserDetails {
     private String login;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "businessUser")
     private List<Company> companies;
-    @ManyToMany(mappedBy = "workers")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "workers")
     private List<Company> workerInCompanies;
 
     @Override
