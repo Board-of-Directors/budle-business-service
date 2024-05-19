@@ -28,7 +28,7 @@ public class ChatServiceImpl implements ChatService {
     private static final String ORDER_TOPIC = "orderTopic";
     private final KafkaTemplate<String, BusinessMessageEvent> kafkaTemplate;
     private final SecurityService securityService;
-    private final OrderService orderService;
+    private final OrderFacade orderFacade;
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final BusinessUserRepository businessUserRepository;
 
@@ -51,7 +51,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<ResponseMessageDto> getChat(Long orderId) {
         BusinessUser user = securityService.getLoggedInUser();
-        return Objects.requireNonNull(orderService.getMessages(user.getId(), orderId));
+        return Objects.requireNonNull(orderFacade.getMessages(user.getId(), orderId));
     }
 
     @Override

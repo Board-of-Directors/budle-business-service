@@ -5,7 +5,6 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestWorkerDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseWorkerDto;
-import ru.nsu.fit.directors.businessservice.exceptions.NotEnoughRightException;
 import ru.nsu.fit.directors.businessservice.mapper.BusinessUserMapper;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.model.Company;
