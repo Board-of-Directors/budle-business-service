@@ -2,9 +2,6 @@ package ru.nsu.fit.directors.businessservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.RandomStringUtils;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.businessservice.dto.BusinessUserLoginRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
@@ -20,7 +17,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @Service
 @ParametersAreNonnullByDefault
 @RequiredArgsConstructor
-public class BusinessUserServiceImpl implements BusinessUserService, UserDetailsService {
+public class BusinessUserServiceImpl implements BusinessUserService {
     private final BusinessUserRepository businessUserRepository;
     private final BusinessUserMapper businessUserMapper;
     private final MailNotificationService notificationService;
@@ -50,10 +47,5 @@ public class BusinessUserServiceImpl implements BusinessUserService, UserDetails
     public BusinessUser getByLogin(String username) {
         return businessUserRepository.findBusinessUserByLogin(username)
             .orElseThrow(InvalidCredentialsException::new);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return getByLogin(username);
     }
 }
