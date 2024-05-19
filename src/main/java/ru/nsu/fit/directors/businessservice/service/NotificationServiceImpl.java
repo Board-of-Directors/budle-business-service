@@ -3,6 +3,8 @@ package ru.nsu.fit.directors.businessservice.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -17,10 +19,11 @@ import ru.nsu.fit.directors.businessservice.repository.NotificationRepository;
 
 @Service
 @RequiredArgsConstructor
+@ParametersAreNonnullByDefault
 public class NotificationServiceImpl implements NotificationService {
     private final CompanyBranchRepository companyBranchRepository;
     private final NotificationRepository notificationRepository;
-    private final SecurityService securityService;
+    private final EmployeeService employeeService;
 
     @Override
     public void handleOrderNotification(BusinessOrderNotificationEvent orderNotificationEvent) {
@@ -37,7 +40,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public List<NotificationDto> getNotifications() {
-        BusinessUser businessUser = securityService.getLoggedInUser();
+        BusinessUser businessUser = employeeService.getLoggedInUser();
         List<Company> companies = new ArrayList<>(businessUser.getCompanies());
         companies.addAll(businessUser.getWorkerInCompanies());
         List<Notification> notifications = notificationRepository.findAllByCompanyInAndWasReceived(

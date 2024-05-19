@@ -31,7 +31,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Nonnull
-    private BusinessUser getLoggedInUser() {
+    @Override
+    public BusinessUser getLoggedInUser() {
         return businessUserRepository.findById(jwtTokenRepository.getUserIdOrThrow())
             .orElseThrow(UserNotLoggedInException::new);
     }

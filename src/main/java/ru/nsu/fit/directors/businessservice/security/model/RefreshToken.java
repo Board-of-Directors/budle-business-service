@@ -8,10 +8,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class RefreshToken {
-
     private String uuid;
-
     private String token;
-
     private Instant expireAt;
 }

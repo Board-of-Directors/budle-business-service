@@ -26,7 +26,7 @@ import ru.nsu.fit.directors.businessservice.exceptions.UnauthorizedException;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
-    private final RequestMatcher ignoredPaths = new AntPathRequestMatcher("/**/user/refresh");
+    private final RequestMatcher ignoredPaths = new AntPathRequestMatcher("/**/business/refresh");
 
     private final JwtTokenProvider jwtTokenProvider;
     private final ObjectMapper objectMapper;
@@ -37,13 +37,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         @NonNull final HttpServletResponse response,
         @NonNull final FilterChain filterChain
     ) throws IOException, ServletException {
-        log.debug("doFilterInternal: starting to check token");
         if (ignoredPaths.matches(request)) {
             filterChain.doFilter(request, response);
             return;
         }
         try {
-            jwtTokenProvider.resolveTokenHeader(request.getHeader(HttpHeaders.AUTHORIZATION));
+            jwtTokenProvider.validateToken(request.getHeader(HttpHeaders.AUTHORIZATION));
         } catch (TokenValidationException | UnauthorizedException exception) {
             onFailedAuthentication(response);
             return;

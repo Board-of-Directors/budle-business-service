@@ -13,8 +13,12 @@ import ru.nsu.fit.directors.businessservice.repository.CompanyBranchRepository;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+
 @Service
 @RequiredArgsConstructor
+@ParametersAreNonnullByDefault
 public class WorkerServiceImpl implements WorkerService {
     private final EmployeeService employeeService;
     private final BusinessUserMapper businessUserMapper;
@@ -43,6 +47,7 @@ public class WorkerServiceImpl implements WorkerService {
         companyBranchRepository.save(company);
     }
 
+    @Nonnull
     @Override
     public List<ResponseWorkerDto> searchWorkers(Long establishmentId) {
         employeeService.validateWorker(establishmentId, true);

@@ -20,7 +20,6 @@ public class ChatTopicListener {
 
     @KafkaHandler
     public void handleUserMessage(UserMessageEvent userMessageEvent) {
-        log.info("Receive user message {}", userMessageEvent);
         chatService.handleMessage(userMessageEvent);
     }
 }

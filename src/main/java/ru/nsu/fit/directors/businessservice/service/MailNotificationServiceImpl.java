@@ -1,5 +1,7 @@
 package ru.nsu.fit.directors.businessservice.service;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -8,6 +10,7 @@ import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 
 @Component
 @RequiredArgsConstructor
+@ParametersAreNonnullByDefault
 public class MailNotificationServiceImpl implements MailNotificationService {
     private final JavaMailSender javaMailSender;
 

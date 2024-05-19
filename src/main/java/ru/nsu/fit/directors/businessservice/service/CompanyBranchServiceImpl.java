@@ -24,15 +24,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
 public class CompanyBranchServiceImpl implements CompanyBranchService {
-    private final SecurityService securityService;
+    private final EmployeeService employeeService;
     private final CompanyBranchRepository companyBranchRepository;
     private final EstablishmentServiceClient establishmentClient;
-    private final EmployeeService employeeService;
 
     @Override
     public void createCompanyBranch(CompanyCreateRequestV2 companyCreateRequest) {
+        BusinessUser businessUser = employeeService.getLoggedInUser();
         BaseResponse<Long> createdEstablishmentId = establishmentClient.createEstablishmentV2(
-                securityService.getLoggedInUser().getId(),
+                businessUser.getId(),
                 companyCreateRequest
             )
             .getBody();
@@ -41,7 +41,7 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
             companyBranchRepository.save(
                 new Company()
                     .setId(createdEstablishmentId.getResult())
-                    .setBusinessUser(securityService.getLoggedInUser())
+                    .setBusinessUser(businessUser)
             );
         }
     }
@@ -49,7 +49,7 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
     @Nonnull
     @Override
     public List<ResponseShortEstablishmentInfo> getEstablishmentsByOwner(@Nullable String name) {
-        BusinessUser user = securityService.getLoggedInUser();
+        BusinessUser user = employeeService.getLoggedInUser();
         return Optional.ofNullable(establishmentClient.getEstablishmentsByOwner(user.getId(), name))
             .map(ResponseEntity::getBody)
             .map(BaseResponse::getResult)

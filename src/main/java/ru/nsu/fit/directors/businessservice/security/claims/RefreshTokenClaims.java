@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
 public class RefreshTokenClaims extends SMHTokenClaims {
-
     private static final String CLAIM_TOKEN = "token";
 
     public RefreshTokenClaims(Claims claims) {

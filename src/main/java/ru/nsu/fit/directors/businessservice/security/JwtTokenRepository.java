@@ -23,6 +23,7 @@ public class JwtTokenRepository {
     private final HttpServletRequest request;
     private final HttpServletResponse response;
 
+    @Nonnull
     public Optional<Long> getUserId() {
         String authorizationHeader = request.getHeader(HEADER_AUTH);
         if (authorizationHeader != null && authorizationHeader.startsWith(JwtTokenProvider.SCHEMA_ALGORITHM)) {

@@ -6,6 +6,9 @@ import ru.nsu.fit.directors.businessservice.dto.response.ResponseOrderDto;
 
 import java.util.List;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@ParametersAreNonnullByDefault
 public interface OrderFacade {
     /**
      * Получить заказы заведения.

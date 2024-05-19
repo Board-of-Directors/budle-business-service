@@ -6,7 +6,6 @@ import ru.nsu.fit.directors.businessservice.configuration.SecurityProperties;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 
 public class AccessTokenClaims extends SMHTokenClaims {
-
     private SecurityProperties.KeyClaims keyClaims;
 
     public AccessTokenClaims(Claims claims) {

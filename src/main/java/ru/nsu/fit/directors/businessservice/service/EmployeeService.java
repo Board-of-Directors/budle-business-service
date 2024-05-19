@@ -1,6 +1,9 @@
 package ru.nsu.fit.directors.businessservice.service;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+
+import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 
 @ParametersAreNonnullByDefault
 public interface EmployeeService {
@@ -22,4 +25,12 @@ public interface EmployeeService {
      * @throws ru.nsu.fit.directors.businessservice.exceptions.NotEnoughRightException если недостаточно прав
      */
     void validateWorker(Long establishmentId, boolean canBeWorker);
+
+    /**
+     * Получить активного пользователя.
+     *
+     * @return данные пользователя
+     */
+    @Nonnull
+    BusinessUser getLoggedInUser();
 }

@@ -1,7 +1,6 @@
 package ru.nsu.fit.directors.businessservice.service;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -27,7 +26,7 @@ public class ChatServiceImpl implements ChatService {
     private static final String CHAT_TOPIC = "business-chat-topic";
     private static final String ORDER_TOPIC = "orderTopic";
     private final KafkaTemplate<String, BusinessMessageEvent> kafkaTemplate;
-    private final SecurityService securityService;
+    private final EmployeeService employeeService;
     private final OrderFacade orderFacade;
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final BusinessUserRepository businessUserRepository;
@@ -50,8 +49,8 @@ public class ChatServiceImpl implements ChatService {
     @Nonnull
     @Override
     public List<ResponseMessageDto> getChat(Long orderId) {
-        BusinessUser user = securityService.getLoggedInUser();
-        return Objects.requireNonNull(orderFacade.getMessages(user.getId(), orderId));
+        BusinessUser user = employeeService.getLoggedInUser();
+        return orderFacade.getMessages(user.getId(), orderId);
     }
 
     @Override

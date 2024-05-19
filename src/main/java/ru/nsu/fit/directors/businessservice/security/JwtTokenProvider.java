@@ -12,6 +12,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +27,9 @@ import ru.nsu.fit.directors.businessservice.security.claims.SMHTokenClaims;
 import ru.nsu.fit.directors.businessservice.security.model.RefreshToken;
 
 @Slf4j
-@RequiredArgsConstructor
 @Component
+@RequiredArgsConstructor
 public class JwtTokenProvider {
-
     private String secret;
 
     public static final String SCHEMA_ALGORITHM = "Bearer ";
@@ -58,13 +58,14 @@ public class JwtTokenProvider {
             .build();
     }
 
-    public Optional<AccessTokenClaims> resolveTokenHeader(String bearerToken) throws TokenValidationException {
-        return Optional.ofNullable(bearerToken)
+    public void validateToken(String bearerToken) throws TokenValidationException {
+        Optional.ofNullable(bearerToken)
             .filter(token -> token.startsWith(SCHEMA_ALGORITHM))
             .map(token -> token.substring(SCHEMA_ALGORITHM.length()))
             .flatMap(token -> validateToken(token, AccessTokenClaims.class));
     }
 
+    @Nonnull
     public <T extends SMHTokenClaims> Optional<T> validateToken(String token, Class<T> clazz)
         throws TokenValidationException {
         try {
