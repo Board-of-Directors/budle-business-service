@@ -27,6 +27,7 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
     private final SecurityService securityService;
     private final CompanyBranchRepository companyBranchRepository;
     private final EstablishmentServiceClient establishmentClient;
+    private final EmployeeService employeeService;
 
     @Override
     public void createCompanyBranch(CompanyCreateRequestV2 companyCreateRequest) {
@@ -53,5 +54,12 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
             .map(ResponseEntity::getBody)
             .map(BaseResponse::getResult)
             .orElseGet(List::of);
+    }
+
+    @Override
+    public void deleteCompany(Long establishmentId) {
+        employeeService.validateWorker(establishmentId);
+        establishmentClient.deleteEstablishment(establishmentId);
+        companyBranchRepository.deleteById(establishmentId);
     }
 }

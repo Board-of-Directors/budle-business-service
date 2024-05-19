@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -74,6 +75,11 @@ public class BusinessUserController {
     @PostMapping("v2/company")
     public void create(@RequestBody @Valid CompanyCreateRequestV2 companyCreateRequest) {
         companyBranchService.createCompanyBranch(companyCreateRequest);
+    }
+
+    @DeleteMapping("/v2/company")
+    public void delete(@RequestParam Long establishmentId) {
+        companyBranchService.deleteCompany(establishmentId);
     }
 
     @GetMapping(value = "/establishments")

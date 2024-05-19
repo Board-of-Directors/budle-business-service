@@ -43,4 +43,7 @@ public interface EstablishmentServiceClient {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/internal/menu/product", produces = MediaType.APPLICATION_JSON_VALUE)
     void deleteProduct(@RequestParam long productId);
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/internal/establishment")
+    void deleteEstablishment(Long establishmentId);
 }

@@ -26,4 +26,11 @@ public interface CompanyBranchService {
      */
     @Nonnull
     List<ResponseShortEstablishmentInfo> getEstablishmentsByOwner(String name);
+
+    /**
+     * Удалить компанию.
+     *
+     * @param establishmentId идентификатор компании
+     */
+    void deleteCompany(Long establishmentId);
 }
