@@ -23,4 +23,13 @@ public interface BusinessUserService {
      */
     @Nonnull
     BusinessUser getByLogin(String login);
+
+    /**
+     * Получить бизнес-пользователя по идентификатору.
+     *
+     * @param businessUserId идентификатор бизнес пользователя
+     * @return данные пользователя
+     */
+    @Nonnull
+    BusinessUser getById(Long businessUserId);
 }

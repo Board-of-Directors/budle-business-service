@@ -34,7 +34,7 @@ public class UserFacadeImpl implements UserFacade {
     public AuthResponse loginCredentials(BusinessUserLoginRequest userCredentials) {
         BusinessUser user = businessUserService.getByLogin(userCredentials.login());
         if (!passwordEncoder.matches(userCredentials.password(), user.getPassword())) {
-            throw new UnauthorizedException("Не вошел в аккаунт", "Не вошел в аккаунт");
+            throw new UnauthorizedException("Не вошел в аккаунт");
         }
         RefreshToken refreshToken = jwtTokenProvider.createRefreshToken(userCredentials.login());
         sessionService.createSession(user, refreshToken);
@@ -53,7 +53,7 @@ public class UserFacadeImpl implements UserFacade {
             .orElseThrow(UnauthorizedException::new);
 
         Session session = sessionService.findSessionByUuid(claims.getToken())
-            .orElseThrow(() -> new UnauthorizedException("Не найдено", "Не найдено"));
+            .orElseThrow(() -> new UnauthorizedException("Не найдено"));
 
         return refreshAuthenticationResponseDto(claims, session);
     }

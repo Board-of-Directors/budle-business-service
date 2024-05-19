@@ -73,9 +73,9 @@ public class JwtTokenProvider {
         } catch (ExpiredJwtException expiredJwtException) {
             log.error("token expired: {}", Optional.ofNullable(expiredJwtException.getClaims())
                 .map(Claims::getSubject).orElse(null));
-            throw new UnauthorizedException(expiredJwtException.getMessage(), expiredJwtException.getMessage());
+            throw new UnauthorizedException(expiredJwtException.getMessage());
         } catch (Exception exception) {
-            throw new TokenValidationException(exception.getMessage(), exception.getMessage());
+            throw new TokenValidationException(exception.getMessage());
         }
     }
 

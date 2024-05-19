@@ -25,7 +25,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void handleOrderNotification(BusinessOrderNotificationEvent orderNotificationEvent) {
         Company company = companyBranchRepository.findById(orderNotificationEvent.businessId())
-            .orElseThrow(() -> new BaseException("Establishment not found", "NotFoundException"));
+            .orElseThrow(() -> new BaseException("Establishment not found"));
         notificationRepository.save(
             new Notification()
                 .setCompany(company)

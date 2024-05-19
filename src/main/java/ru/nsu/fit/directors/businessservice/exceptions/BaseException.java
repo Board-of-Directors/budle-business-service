@@ -6,10 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BaseException extends RuntimeException {
-    private String type;
-
-    public BaseException(String message, String type) {
+    public BaseException(String message) {
         super(message);
-        this.type = type;
     }
 }

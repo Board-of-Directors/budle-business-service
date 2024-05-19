@@ -46,7 +46,7 @@ public class CustomErrorDecoderConfiguration implements ErrorDecoder {
             case 500, 503 -> new ServerNotAvailableException();
             default -> {
                 log.error("Uncaught client status {}", response.status());
-                yield new BaseException("Cannot catch client exception", "CannotCatchException");
+                yield new BaseException("Cannot catch client exception");
             }
         };
     }

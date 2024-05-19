@@ -1,17 +1,20 @@
 package ru.nsu.fit.directors.businessservice.mapper;
 
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestWorkerDto;
+import ru.nsu.fit.directors.businessservice.dto.response.BusinessUserCredentialsResponse;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseWorkerDto;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 
 @Component
 @RequiredArgsConstructor
+@ParametersAreNonnullByDefault
 public class BusinessUserMapper {
     private final PasswordEncoder passwordEncoder;
 
@@ -43,12 +46,26 @@ public class BusinessUserMapper {
             .setLogin(login);
     }
 
+    @Nonnull
     public ResponseWorkerDto toWorkerDto(BusinessUser businessUser) {
         return ResponseWorkerDto.builder()
             .id(businessUser.getId())
             .firstName(businessUser.getFirstName())
             .middleName(businessUser.getMiddleName())
             .lastName(businessUser.getLastName())
+            .build();
+    }
+
+    @Nonnull
+    public BusinessUserCredentialsResponse toResponse(BusinessUser businessUser) {
+        return BusinessUserCredentialsResponse.builder()
+            .id(businessUser.getId())
+            .firstName(businessUser.getFirstName())
+            .middleName(businessUser.getMiddleName())
+            .lastName(businessUser.getLastName())
+            .email(businessUser.getEmail())
+            .phoneNumber(businessUser.getPhoneNumber())
+            .login(businessUser.getLogin())
             .build();
     }
 }

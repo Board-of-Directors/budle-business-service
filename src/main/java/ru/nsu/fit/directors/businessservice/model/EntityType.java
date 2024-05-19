@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum EntityType {
     COMPANY("Заведение"),
-    BUSINESS_USER("Работник"),
+    BUSINESS_USER("Пользователь"),
     ;
 
     private final String readableName;

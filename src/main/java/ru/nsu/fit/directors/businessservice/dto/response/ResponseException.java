@@ -13,17 +13,14 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ResponseException {
     private String message;
-    private String type;
 
     /**
      * Default constructor of exception.
      *
      * @param message of the error.
-     * @param type    of the error.
      */
-    public ResponseException(String message, String type) {
+    public ResponseException(String message) {
         this.message = message;
-        this.type = type;
     }
 
 }

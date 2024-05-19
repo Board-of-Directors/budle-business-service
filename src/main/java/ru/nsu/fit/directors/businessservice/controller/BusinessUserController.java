@@ -17,12 +17,13 @@ import ru.nsu.fit.directors.businessservice.dto.BusinessUserLoginRequest;
 import ru.nsu.fit.directors.businessservice.dto.ResponseAuthDto;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
+import ru.nsu.fit.directors.businessservice.dto.response.BusinessUserCredentialsResponse;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseMessageDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseOrderDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
+import ru.nsu.fit.directors.businessservice.facade.BusinessUserFacade;
 import ru.nsu.fit.directors.businessservice.facade.UserFacade;
 import ru.nsu.fit.directors.businessservice.security.JwtTokenRepository;
-import ru.nsu.fit.directors.businessservice.service.BusinessUserService;
 import ru.nsu.fit.directors.businessservice.service.ChatService;
 import ru.nsu.fit.directors.businessservice.service.CompanyBranchService;
 import ru.nsu.fit.directors.businessservice.service.OrderFacade;
@@ -38,7 +39,7 @@ import java.util.List;
 @RequestMapping(value = "/business")
 @Validated
 public class BusinessUserController {
-    private final BusinessUserService businessUserService;
+    private final BusinessUserFacade businessUserFacade;
     private final CompanyBranchService companyBranchService;
     private final OrderFacade orderFacade;
     private final ChatService chatService;
@@ -47,7 +48,7 @@ public class BusinessUserController {
 
     @PostMapping(value = "/registration")
     public void register(@RequestBody @Valid BusinessUserRegisterRequest businessUserRegisterRequest) {
-        businessUserService.registerBusinessUser(businessUserRegisterRequest);
+        businessUserFacade.register(businessUserRegisterRequest);
     }
 
     @GetMapping("/chat/history")
@@ -56,8 +57,8 @@ public class BusinessUserController {
     }
 
     @GetMapping(value = "/me")
-    public Long me() {
-        return jwtTokenRepository.getUserIdOrThrow();
+    public BusinessUserCredentialsResponse me() {
+        return businessUserFacade.getActiveUser();
     }
 
     @PostMapping(value = "/login/jwt", consumes = MediaType.APPLICATION_JSON_VALUE)

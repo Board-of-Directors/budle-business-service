@@ -27,12 +27,11 @@ import java.util.LinkedHashMap;
 
 @RestControllerAdvice(basePackages = "ru.nsu.fit.directors.businessservice.controller")
 public class ArticleController extends ResponseEntityExceptionHandler implements ResponseBodyAdvice<Object> {
-    private static final String NOT_VALID_EXCEPTION = "notValidException";
 
     @ExceptionHandler(BaseException.class)
-    public ResponseEntity<BaseResponse<Object>> handleException(BaseException e) {
-        BaseResponse<Object> response = new BaseResponse<>(e.getMessage(), e.getType());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<BaseResponse<?>> handleException(BaseException e) {
+        BaseResponse<?> exceptionResponse = BaseResponse.ofException(e.getMessage());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
     @Override
@@ -57,7 +56,7 @@ public class ArticleController extends ResponseEntityExceptionHandler implements
         } else if (selectedContentType.toString().equals(MediaType.APPLICATION_XML_VALUE)) {
             return body;
         }
-        return new BaseResponse<>(body);
+        return BaseResponse.ofResult(body);
     }
 
     @Nullable
@@ -69,8 +68,8 @@ public class ArticleController extends ResponseEntityExceptionHandler implements
         @NonNull WebRequest request
     ) {
         String message = getDefaultMessage(ex);
-        BaseResponse<Object> response = new BaseResponse<>(message, NOT_VALID_EXCEPTION);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        BaseResponse<?> response = BaseResponse.ofException(message);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @Nullable
@@ -82,8 +81,8 @@ public class ArticleController extends ResponseEntityExceptionHandler implements
         @NonNull WebRequest request
     ) {
         String message = ex.getMessage();
-        BaseResponse<Object> response = new BaseResponse<>(message, NOT_VALID_EXCEPTION);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        BaseResponse<?> response = BaseResponse.ofException(message);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @NonNull
