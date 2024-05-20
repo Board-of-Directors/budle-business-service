@@ -37,6 +37,11 @@ public class WorkerController {
 
     }
 
+    @PutMapping(value = "/invite")
+    public void inviteWorker(@RequestParam Long establishmentId, @RequestParam String token){
+        workerService.inviteWorker(establishmentId, token);
+    }
+
     @PutMapping
     public void addWorker(@RequestParam Long workerId, @RequestParam Long establishmentId) {
         workerService.addWorker(workerId, establishmentId);

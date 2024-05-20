@@ -95,7 +95,7 @@ public class BusinessUserController {
     }
 
     @PutMapping("/v2/company")
-    public void change(@RequestParam Long establishmentId, CompanyCreateRequestV2 changeRequest) {
+    public void change(@RequestParam Long establishmentId, @RequestBody CompanyCreateRequestV2 changeRequest) {
         companyService.changeCompany(establishmentId, changeRequest);
     }
 

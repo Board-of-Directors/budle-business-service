@@ -6,14 +6,17 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestWorkerDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseWorkerDto;
+import ru.nsu.fit.directors.businessservice.exceptions.EntityNotFoundException;
 import ru.nsu.fit.directors.businessservice.mapper.BusinessUserMapper;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.model.Company;
+import ru.nsu.fit.directors.businessservice.model.EntityType;
 import ru.nsu.fit.directors.businessservice.repository.BusinessUserRepository;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -81,5 +84,13 @@ public class WorkerServiceImpl implements WorkerService {
             .filter(user -> !Objects.equals(user.getId(), businessUser.getId()))
             .map(businessUserMapper::toWorkerDto)
             .toList();
+    }
+
+    @Override
+    public void inviteWorker(Long establishmentId, String token) {
+        BusinessUser businessUser = businessUserRepository.findByToken(UUID.fromString(token))
+            .orElseThrow(() -> new EntityNotFoundException(EntityType.BUSINESS_USER, token));
+
+
     }
 }

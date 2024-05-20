@@ -49,4 +49,12 @@ public interface WorkerService {
      */
     @Nonnull
     List<ResponseWorkerDto> getAllWorkers();
+
+    /**
+     * Пригласить работника в заведение.
+     *
+     * @param establishmentId идентификатор заведения
+     * @param token           токен работника
+     */
+    void inviteWorker(Long establishmentId, String token);
 }
