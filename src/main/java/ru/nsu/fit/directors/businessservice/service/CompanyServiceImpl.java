@@ -15,7 +15,7 @@ import ru.nsu.fit.directors.businessservice.model.Company;
 import ru.nsu.fit.directors.businessservice.model.EntityType;
 import ru.nsu.fit.directors.businessservice.model.Option;
 import ru.nsu.fit.directors.businessservice.repository.AvailableOptionRepository;
-import ru.nsu.fit.directors.businessservice.repository.CompanyBranchRepository;
+import ru.nsu.fit.directors.businessservice.repository.CompanyRepository;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,9 +29,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
-public class CompanyBranchServiceImpl implements CompanyBranchService {
+public class CompanyServiceImpl implements CompanyService {
     private final EmployeeService employeeService;
-    private final CompanyBranchRepository companyBranchRepository;
+    private final CompanyRepository companyRepository;
     private final EstablishmentServiceClient establishmentClient;
     private final AvailableOptionRepository availableOptionRepository;
 
@@ -45,7 +45,7 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
 
     private void create(BaseResponse<Long> createdEstablishmentId, BusinessUser businessUser) {
         log.info("Created establishment id {}", createdEstablishmentId.getResult());
-        Company company = companyBranchRepository.save(
+        Company company = companyRepository.save(
             new Company()
                 .setId(createdEstablishmentId.getResult())
                 .setBusinessUser(businessUser)
@@ -71,7 +71,7 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
         Company company = getById(establishmentId);
         employeeService.validateWorker(company.getId(), false);
         establishmentClient.deleteEstablishment(establishmentId);
-        companyBranchRepository.deleteById(establishmentId);
+        companyRepository.deleteById(establishmentId);
     }
 
     @Override
@@ -84,12 +84,12 @@ public class CompanyBranchServiceImpl implements CompanyBranchService {
     @Nonnull
     @Override
     public Company getById(Long id) {
-        return companyBranchRepository.findById(id)
+        return companyRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException(EntityType.COMPANY, id));
     }
 
     @Override
     public void save(Company company) {
-        companyBranchRepository.save(company);
+        companyRepository.save(company);
     }
 }

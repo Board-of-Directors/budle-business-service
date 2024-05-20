@@ -14,20 +14,20 @@ import ru.nsu.fit.directors.businessservice.exceptions.BaseException;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.model.Company;
 import ru.nsu.fit.directors.businessservice.model.Notification;
-import ru.nsu.fit.directors.businessservice.repository.CompanyBranchRepository;
+import ru.nsu.fit.directors.businessservice.repository.CompanyRepository;
 import ru.nsu.fit.directors.businessservice.repository.NotificationRepository;
 
 @Service
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
 public class NotificationServiceImpl implements NotificationService {
-    private final CompanyBranchRepository companyBranchRepository;
+    private final CompanyRepository companyRepository;
     private final NotificationRepository notificationRepository;
     private final EmployeeService employeeService;
 
     @Override
     public void handleOrderNotification(BusinessOrderNotificationEvent orderNotificationEvent) {
-        Company company = companyBranchRepository.findById(orderNotificationEvent.businessId())
+        Company company = companyRepository.findById(orderNotificationEvent.businessId())
             .orElseThrow(() -> new BaseException("Establishment not found"));
         notificationRepository.save(
             new Notification()

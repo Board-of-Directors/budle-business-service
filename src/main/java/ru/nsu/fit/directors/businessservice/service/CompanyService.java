@@ -10,7 +10,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public interface CompanyBranchService {
+public interface CompanyService {
 
     /**
      * Создать филиал заведения.

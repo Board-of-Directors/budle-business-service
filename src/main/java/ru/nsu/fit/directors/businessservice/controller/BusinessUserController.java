@@ -28,7 +28,7 @@ import ru.nsu.fit.directors.businessservice.facade.BusinessUserFacade;
 import ru.nsu.fit.directors.businessservice.facade.UserFacade;
 import ru.nsu.fit.directors.businessservice.security.JwtTokenRepository;
 import ru.nsu.fit.directors.businessservice.service.ChatService;
-import ru.nsu.fit.directors.businessservice.service.CompanyBranchService;
+import ru.nsu.fit.directors.businessservice.service.CompanyService;
 import ru.nsu.fit.directors.businessservice.service.OrderFacade;
 
 import javax.annotation.Nonnull;
@@ -43,7 +43,7 @@ import java.util.List;
 @Validated
 public class BusinessUserController {
     private final BusinessUserFacade businessUserFacade;
-    private final CompanyBranchService companyBranchService;
+    private final CompanyService companyService;
     private final OrderFacade orderFacade;
     private final ChatService chatService;
     private final UserFacade userFacade;
@@ -81,24 +81,24 @@ public class BusinessUserController {
 
     @PostMapping("v2/company")
     public void create(@RequestBody @Valid CompanyCreateRequestV2 companyCreateRequest) {
-        companyBranchService.createCompanyBranch(companyCreateRequest);
+        companyService.createCompanyBranch(companyCreateRequest);
     }
 
     @DeleteMapping("/v2/company")
     public void delete(@RequestParam Long establishmentId) {
-        companyBranchService.deleteCompany(establishmentId);
+        companyService.deleteCompany(establishmentId);
     }
 
     @PutMapping("/v2/company")
     public void change(@RequestParam Long establishmentId, CompanyCreateRequestV2 changeRequest){
-        companyBranchService.changeCompany(establishmentId, changeRequest);
+        companyService.changeCompany(establishmentId, changeRequest);
     }
 
     @GetMapping(value = "/establishments")
     public List<ResponseShortEstablishmentInfo> ownerEstablishments(
         @RequestParam(required = false) String name
     ) {
-        return companyBranchService.getEstablishmentsByOwner(name);
+        return companyService.getEstablishmentsByOwner(name);
     }
 
     @GetMapping(value = "/orders")
