@@ -11,9 +11,11 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.UuidGenerator;
 import ru.nsu.fit.directors.businessservice.exceptions.WrongNameFormatException;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
@@ -37,6 +39,8 @@ public class BusinessUser {
     private List<Company> companies;
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "workers")
     private List<Company> workerInCompanies;
+    @UuidGenerator
+    private UUID token;
 
     @Nonnull
     public BusinessUser setFullName(String fullName) {

@@ -30,4 +30,12 @@ public interface BusinessUserFacade {
      * @param changeBusinessUserRequest новые данные
      */
     void changeBusinessUser(ChangeBusinessUserRequest changeBusinessUserRequest);
+
+    /**
+     * Получить токен приглашения.
+     *
+     * @return токен
+     */
+    @Nonnull
+    String getInviteToken();
 }

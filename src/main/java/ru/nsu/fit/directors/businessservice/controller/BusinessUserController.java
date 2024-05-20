@@ -59,6 +59,11 @@ public class BusinessUserController {
         businessUserFacade.changeBusinessUser(changeBusinessUserRequest);
     }
 
+    @GetMapping("/token")
+    public String getInviteToken() {
+        return businessUserFacade.getInviteToken();
+    }
+
     @GetMapping("/chat/history")
     public List<ResponseMessageDto> getMessages(@RequestParam Long orderId) {
         return chatService.getChat(orderId);
@@ -90,7 +95,7 @@ public class BusinessUserController {
     }
 
     @PutMapping("/v2/company")
-    public void change(@RequestParam Long establishmentId, CompanyCreateRequestV2 changeRequest){
+    public void change(@RequestParam Long establishmentId, CompanyCreateRequestV2 changeRequest) {
         companyService.changeCompany(establishmentId, changeRequest);
     }
 

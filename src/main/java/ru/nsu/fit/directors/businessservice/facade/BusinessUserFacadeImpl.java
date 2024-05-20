@@ -41,4 +41,12 @@ public class BusinessUserFacadeImpl implements BusinessUserFacade {
         businessUserMapper.updateModel(businessUser, changeBusinessUserRequest);
         businessUserService.save(businessUser);
     }
+
+    @Nonnull
+    @Override
+    public String getInviteToken() {
+        Long businessUserId = jwtTokenRepository.getUserIdOrThrow();
+        BusinessUser businessUser = businessUserService.getById(businessUserId);
+        return businessUser.getToken().toString();
+    }
 }
