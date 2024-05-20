@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.nsu.fit.directors.businessservice.configuration.ClientConfiguration;
 import ru.nsu.fit.directors.businessservice.configuration.CustomErrorDecoderConfiguration;
+import ru.nsu.fit.directors.businessservice.dto.CreateAnswerRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestCategoryDto;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestProductDto;
@@ -30,7 +31,10 @@ public interface EstablishmentServiceClient {
     );
 
     @RequestMapping(method = RequestMethod.GET, value = "/internal/establishment/owner", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<BaseResponse<List<ResponseShortEstablishmentInfo>>> getEstablishmentsByOwner(@RequestParam Long ownerId, @RequestParam String name);
+    ResponseEntity<BaseResponse<List<ResponseShortEstablishmentInfo>>> getEstablishmentsByOwner(
+        @RequestParam Long ownerId,
+        @RequestParam String name
+    );
 
     @RequestMapping(method = RequestMethod.POST, value = "/internal/menu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     void add(@RequestBody RequestCategoryDto category);
@@ -45,8 +49,11 @@ public interface EstablishmentServiceClient {
     void deleteProduct(@RequestParam long productId);
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/internal/establishment")
-    void deleteEstablishment(@RequestParam  Long establishmentId);
+    void deleteEstablishment(@RequestParam Long establishmentId);
 
     @RequestMapping(method = RequestMethod.PUT, value = "/internal/establishment")
     void update(@RequestParam Long establishmentId, @RequestBody CompanyCreateRequestV2 establishmentDto);
+
+    @RequestMapping(method = RequestMethod.POST, value = "/internal/review/answer")
+    void createAnswer(@RequestBody CreateAnswerRequest createAnswerRequest);
 }
