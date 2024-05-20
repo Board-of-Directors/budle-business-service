@@ -21,6 +21,11 @@ import java.util.List;
 public class WorkerController {
     private final WorkerService workerService;
 
+    @GetMapping(value = "/all")
+    public List<ResponseWorkerDto> getAllWorkers() {
+        return workerService.getAllWorkers();
+    }
+
     @GetMapping
     public List<ResponseWorkerDto> search(@RequestParam(required = false) Long establishmentId) {
         return workerService.searchWorkers(establishmentId);

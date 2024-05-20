@@ -41,4 +41,12 @@ public interface WorkerService {
      * @param establishmentId идентификатор заведения
      */
     void addWorker(Long workerId, Long establishmentId);
+
+    /**
+     * Получить всех работников.
+     *
+     * @return список всех работников
+     */
+    @Nonnull
+    List<ResponseWorkerDto> getAllWorkers();
 }

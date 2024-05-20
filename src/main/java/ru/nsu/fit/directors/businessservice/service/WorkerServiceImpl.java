@@ -1,6 +1,7 @@
 package ru.nsu.fit.directors.businessservice.service;
 
 import lombok.RequiredArgsConstructor;
+import one.util.streamex.StreamEx;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestWorkerDto;
@@ -10,7 +11,9 @@ import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.model.Company;
 import ru.nsu.fit.directors.businessservice.repository.BusinessUserRepository;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -64,5 +67,19 @@ public class WorkerServiceImpl implements WorkerService {
         Company company = companyService.getById(establishmentId);
         company.getWorkers().add(worker);
         companyService.save(company);
+    }
+
+    @Nonnull
+    @Override
+    public List<ResponseWorkerDto> getAllWorkers() {
+        BusinessUser businessUser = employeeService.getLoggedInUser();
+        return StreamEx.of(businessUser.getCompanies())
+            .append(businessUser.getWorkerInCompanies())
+            .map(Company::getWorkers)
+            .flatMap(Collection::stream)
+            .distinct(BusinessUser::getId)
+            .filter(user -> !Objects.equals(user.getId(), businessUser.getId()))
+            .map(businessUserMapper::toWorkerDto)
+            .toList();
     }
 }
