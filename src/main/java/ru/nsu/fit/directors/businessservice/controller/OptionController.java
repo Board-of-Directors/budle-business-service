@@ -20,4 +20,9 @@ public class OptionController {
     public List<AvailableOptionResponse> getOptions(@RequestParam Long workerId, @RequestParam Long establishmentId) {
         return optionFacade.getAvailableOptions(workerId, establishmentId);
     }
+
+    @GetMapping(value = "/all")
+    public List<AvailableOptionResponse> getOptions(){
+        return optionFacade.getAllOptions();
+    }
 }

@@ -42,4 +42,12 @@ public class OptionFacadeImpl implements OptionFacade {
             .map(option -> optionConverter.toResponse(option, availableOptions.contains(option)))
             .toList();
     }
+
+    @Nonnull
+    @Override
+    public List<AvailableOptionResponse> getAllOptions() {
+        return Arrays.stream(Option.values())
+            .map(option -> optionConverter.toResponse(option, false))
+            .toList();
+    }
 }

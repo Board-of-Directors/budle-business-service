@@ -18,4 +18,12 @@ public interface OptionFacade {
      */
     @Nonnull
     List<AvailableOptionResponse> getAvailableOptions(Long workerId, Long establishmentId);
+
+    /**
+     * Получить все доступные опции.
+     *
+     * @return список опций
+     */
+    @Nonnull
+    List<AvailableOptionResponse> getAllOptions();
 }
