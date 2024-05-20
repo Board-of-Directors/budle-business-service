@@ -2,6 +2,8 @@ package ru.nsu.fit.directors.businessservice.facade;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import ru.nsu.fit.directors.businessservice.dto.request.ChangeCategoryRequest;
+import ru.nsu.fit.directors.businessservice.dto.request.ChangeProductRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestCategoryDto;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestProductDto;
 
@@ -36,4 +38,18 @@ public interface MenuFacade {
      * @param productId       идентификатор продукта
      */
     void deleteProduct(Long establishmentId, Long productId);
+
+    /**
+     * Изменить категорию.
+     *
+     * @param changeCategoryRequest запрос изменения категории
+     */
+    void changeCategory(ChangeCategoryRequest changeCategoryRequest);
+
+    /**
+     * Изменить продукт.
+     *
+     * @param changeProductRequest запрос изменения продукта
+     */
+    void changeProduct(ChangeProductRequest changeProductRequest);
 }

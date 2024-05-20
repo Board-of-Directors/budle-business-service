@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.nsu.fit.directors.businessservice.configuration.ClientConfiguration;
 import ru.nsu.fit.directors.businessservice.configuration.CustomErrorDecoderConfiguration;
 import ru.nsu.fit.directors.businessservice.dto.CreateAnswerRequest;
+import ru.nsu.fit.directors.businessservice.dto.request.ChangeCategoryRequest;
+import ru.nsu.fit.directors.businessservice.dto.request.ChangeProductRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestCategoryDto;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestProductDto;
@@ -56,4 +58,10 @@ public interface EstablishmentServiceClient {
 
     @RequestMapping(method = RequestMethod.POST, value = "/internal/review/answer")
     void createAnswer(@RequestBody CreateAnswerRequest createAnswerRequest);
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/internal/menu")
+    void changeCategory(@RequestBody ChangeCategoryRequest changeCategoryRequest);
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/internal/menu/product")
+    void changeProduct(@RequestBody ChangeProductRequest changeProductRequest);
 }

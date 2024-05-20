@@ -5,6 +5,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.businessservice.api.EstablishmentServiceClient;
+import ru.nsu.fit.directors.businessservice.dto.request.ChangeCategoryRequest;
+import ru.nsu.fit.directors.businessservice.dto.request.ChangeProductRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestCategoryDto;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestProductDto;
 import ru.nsu.fit.directors.businessservice.service.EmployeeService;
@@ -38,5 +40,15 @@ public class MenuFacadeImpl implements MenuFacade {
     public void deleteProduct(Long establishmentId, Long productId) {
         employeeService.validateWorker(establishmentId);
         establishmentServiceClient.deleteProduct(productId);
+    }
+
+    @Override
+    public void changeCategory(ChangeCategoryRequest changeCategoryRequest) {
+        establishmentServiceClient.changeCategory(changeCategoryRequest);
+    }
+
+    @Override
+    public void changeProduct(ChangeProductRequest changeProductRequest) {
+        establishmentServiceClient.changeProduct(changeProductRequest);
     }
 }
