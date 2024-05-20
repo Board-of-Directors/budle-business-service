@@ -23,13 +23,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final AvailableOptionRepository availableOptionRepository;
 
     @Override
-    public void validateWorker(Long establishmentId, boolean canBeWorker) {
+    public void validateOwner(Long establishmentId) {
         BusinessUser loggedUser = getLoggedInUser();
         boolean isOwner = loggedUser.getCompanies().stream()
             .anyMatch(company -> company.getId().equals(establishmentId));
-        boolean isWorker = loggedUser.getWorkerInCompanies().stream()
-            .anyMatch(company -> company.getId().equals(establishmentId));
-        if (!isOwner && (!canBeWorker || !isWorker)) {
+        if (!isOwner) {
             throw new NotEnoughRightException();
         }
     }

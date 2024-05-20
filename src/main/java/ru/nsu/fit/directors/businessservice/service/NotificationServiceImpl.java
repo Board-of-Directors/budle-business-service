@@ -42,7 +42,6 @@ public class NotificationServiceImpl implements NotificationService {
     public List<NotificationDto> getNotifications() {
         BusinessUser businessUser = employeeService.getLoggedInUser();
         List<Company> companies = new ArrayList<>(businessUser.getCompanies());
-        companies.addAll(businessUser.getWorkerInCompanies());
         List<Notification> notifications = notificationRepository.findAllByCompanyInAndWasReceived(
             companies,
             false

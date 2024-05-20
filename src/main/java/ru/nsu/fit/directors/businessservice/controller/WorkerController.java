@@ -3,13 +3,10 @@ package ru.nsu.fit.directors.businessservice.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.nsu.fit.directors.businessservice.dto.request.RequestWorkerDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseWorkerDto;
 import ru.nsu.fit.directors.businessservice.service.WorkerService;
 
@@ -29,12 +26,6 @@ public class WorkerController {
     @GetMapping
     public List<ResponseWorkerDto> search(@RequestParam(required = false) Long establishmentId) {
         return workerService.searchWorkers(establishmentId);
-    }
-
-    @PostMapping
-    public void create(@RequestBody RequestWorkerDto workerDto) {
-        workerService.createWorker(workerDto);
-
     }
 
     @PutMapping(value = "/invite")

@@ -15,6 +15,7 @@ public enum Option {
     EDITING_COMPANY("Редактирование информации заведения"),
     SEARCHING_ORDERS("Просмотр заказов заведения"),
     CHANGING_ORDER_STATUSES("Изменения статусов заказов"),
+    VIEW_COMPANY_INFORMATION("Просматривать информацию о компании"),
     ;
 
     private final String readableName;

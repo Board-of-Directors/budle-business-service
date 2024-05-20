@@ -26,7 +26,7 @@ public class OrderFacadeImpl implements OrderFacade {
     @Nonnull
     @Override
     public List<ResponseOrderDto> getOrdersByEstablishment(Long establishmentId) {
-        employeeService.validateWorker(establishmentId);
+        employeeService.validateOwner(establishmentId);
         return Optional.ofNullable(orderServiceClient.getEstablishmentOrders(establishmentId).getBody())
             .map(BaseResponse::getResult)
             .orElseGet(List::of);
@@ -34,7 +34,7 @@ public class OrderFacadeImpl implements OrderFacade {
 
     @Override
     public void setOrderStatus(Long orderId, Long establishmentId, int status) {
-        employeeService.validateWorker(establishmentId);
+        employeeService.validateOwner(establishmentId);
         kafkaTemplate.send(
             "orderTopic",
             OrderStatusChangedEvent.builder()

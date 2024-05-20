@@ -20,25 +20,25 @@ public class MenuFacadeImpl implements MenuFacade {
 
     @Override
     public void addCategory(RequestCategoryDto requestCategoryDto) {
-        employeeService.validateWorker(requestCategoryDto.establishmentId());
+        employeeService.validateOwner(requestCategoryDto.establishmentId());
         establishmentServiceClient.add(requestCategoryDto);
     }
 
     @Override
     public void deleteCategory(Long establishmentId, Long categoryId) {
-        employeeService.validateWorker(establishmentId);
+        employeeService.validateOwner(establishmentId);
         establishmentServiceClient.deleteCategory(categoryId);
     }
 
     @Override
     public void addProduct(RequestProductDto requestProductDto) {
-        employeeService.validateWorker(requestProductDto.establishmentId());
+        employeeService.validateOwner(requestProductDto.establishmentId());
         establishmentServiceClient.addProduct(requestProductDto);
     }
 
     @Override
     public void deleteProduct(Long establishmentId, Long productId) {
-        employeeService.validateWorker(establishmentId);
+        employeeService.validateOwner(establishmentId);
         establishmentServiceClient.deleteProduct(productId);
     }
 

@@ -1,6 +1,5 @@
 package ru.nsu.fit.directors.businessservice.service;
 
-import ru.nsu.fit.directors.businessservice.dto.request.RequestWorkerDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseWorkerDto;
 
 import java.util.List;
@@ -10,12 +9,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public interface WorkerService {
-    /**
-     * Создать работника заведения.
-     *
-     * @param workerDto данные о работнике
-     */
-    void createWorker(RequestWorkerDto workerDto);
 
     /**
      * Удалить работника заведения.
