@@ -20,6 +20,7 @@ import ru.nsu.fit.directors.businessservice.dto.ChangeBusinessUserRequest;
 import ru.nsu.fit.directors.businessservice.dto.ResponseAuthDto;
 import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequest;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
+import ru.nsu.fit.directors.businessservice.dto.response.BaseResponse;
 import ru.nsu.fit.directors.businessservice.dto.response.BusinessUserCredentialsResponse;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseMessageDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseOrderDto;
@@ -60,8 +61,8 @@ public class BusinessUserController {
     }
 
     @GetMapping("/token")
-    public String getInviteToken() {
-        return businessUserFacade.getInviteToken();
+    public BaseResponse<?> getInviteToken() {
+        return BaseResponse.ofResult(businessUserFacade.getInviteToken());
     }
 
     @GetMapping("/chat/history")
