@@ -1,5 +1,6 @@
 package ru.nsu.fit.directors.businessservice.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import one.util.streamex.StreamEx;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
 public class WorkerServiceImpl implements WorkerService {
