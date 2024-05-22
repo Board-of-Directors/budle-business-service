@@ -24,7 +24,7 @@ public class WorkerController {
     }
 
     @GetMapping
-    public List<ResponseWorkerDto> search(@RequestParam(required = false) Long establishmentId) {
+    public List<ResponseWorkerDto> search(@RequestParam Long establishmentId) {
         return workerService.searchWorkers(establishmentId);
     }
 
