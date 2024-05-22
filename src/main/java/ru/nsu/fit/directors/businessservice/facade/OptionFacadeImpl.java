@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.businessservice.dto.ChangeOptionRequest;
@@ -23,6 +24,7 @@ import ru.nsu.fit.directors.businessservice.service.CompanyService;
 import ru.nsu.fit.directors.businessservice.service.OptionService;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
 public class OptionFacadeImpl implements OptionFacade {
