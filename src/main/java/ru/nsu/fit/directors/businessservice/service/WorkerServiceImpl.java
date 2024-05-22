@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import one.util.streamex.StreamEx;
 import org.springframework.stereotype.Service;
+import ru.nsu.fit.directors.businessservice.dto.request.InviteWorkerRequest;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseWorkerDto;
 import ru.nsu.fit.directors.businessservice.exceptions.EntityNotFoundException;
 import ru.nsu.fit.directors.businessservice.mapper.BusinessUserMapper;
@@ -55,15 +56,6 @@ public class WorkerServiceImpl implements WorkerService {
 
     }
 
-    @Override
-    public void addWorker(Long workerId, Long establishmentId) {
-        //TODO: Добавление настроек
-        employeeService.validateOwner(establishmentId);
-        BusinessUser worker = businessUserRepository.findById(workerId).orElseThrow();
-        Company company = companyService.getById(establishmentId);
-        addWorker(company, worker);
-    }
-
     @Nonnull
     @Override
     public List<ResponseWorkerDto> getAllWorkers() {
@@ -78,22 +70,4 @@ public class WorkerServiceImpl implements WorkerService {
             .toList();
     }
 
-    @Override
-    public void inviteWorker(Long establishmentId, String token) {
-        // Добавление настроек
-        BusinessUser businessUser = businessUserRepository.findByToken(UUID.fromString(token))
-            .orElseThrow(() -> new EntityNotFoundException(EntityType.BUSINESS_USER, token));
-        Company company = companyService.getById(establishmentId);
-        addWorker(company, businessUser);
-
-    }
-
-    private void addWorker(Company company, BusinessUser businessUser) {
-        availableOptionRepository.save(
-            new AvailableOption()
-                .setBusinessUser(businessUser)
-                .setCompany(company)
-                .setOption(Option.VIEW_COMPANY_INFORMATION)
-        );
-    }
 }

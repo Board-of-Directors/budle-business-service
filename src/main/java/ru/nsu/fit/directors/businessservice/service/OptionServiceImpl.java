@@ -7,9 +7,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.nsu.fit.directors.businessservice.dto.request.RequestOptionDto;
 import ru.nsu.fit.directors.businessservice.model.AvailableOption;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.model.Company;
+import ru.nsu.fit.directors.businessservice.model.Option;
 import ru.nsu.fit.directors.businessservice.repository.AvailableOptionRepository;
 
 @Service
@@ -28,5 +30,16 @@ public class OptionServiceImpl implements OptionService {
     public void replaceOptions(List<AvailableOption> actualOptions, BusinessUser businessUser, Company company) {
         availableOptionRepository.deleteAllByBusinessUserAndCompany(businessUser, company);
         availableOptionRepository.saveAll(actualOptions);
+    }
+
+    @Override
+    public void addInitialOptions(BusinessUser businessUser, Company company, List<AvailableOption> options) {
+        availableOptionRepository.save(
+            new AvailableOption()
+                .setBusinessUser(businessUser)
+                .setCompany(company)
+                .setOption(Option.VIEW_COMPANY_INFORMATION)
+        );
+        availableOptionRepository.saveAll(options);
     }
 }

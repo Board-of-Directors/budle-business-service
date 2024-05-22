@@ -1,5 +1,7 @@
 package ru.nsu.fit.directors.businessservice.service;
 
+import java.util.UUID;
+
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.stereotype.Service;
@@ -54,5 +56,12 @@ public class BusinessUserServiceImpl implements BusinessUserService {
     @Override
     public void save(BusinessUser businessUser) {
         businessUserRepository.save(businessUser);
+    }
+
+    @Nonnull
+    @Override
+    public BusinessUser getByToken(String token) {
+        return businessUserRepository.findByToken(UUID.fromString(token))
+            .orElseThrow(() -> new EntityNotFoundException(EntityType.BUSINESS_USER, token));
     }
 }

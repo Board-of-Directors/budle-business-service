@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import ru.nsu.fit.directors.businessservice.dto.request.RequestOptionDto;
 import ru.nsu.fit.directors.businessservice.model.AvailableOption;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.model.Company;
@@ -29,4 +30,13 @@ public interface OptionService {
      * @param businessUser  пользователь
      */
     void replaceOptions(List<AvailableOption> actualOptions, BusinessUser businessUser, Company company);
+
+    /**
+     * Добавить начальные настройки работника.
+     *
+     * @param businessUser работник
+     * @param company      компания
+     * @param options      переданные настройки
+     */
+    void addInitialOptions(BusinessUser businessUser, Company company, List<AvailableOption> options);
 }

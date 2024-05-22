@@ -39,4 +39,13 @@ public interface BusinessUserService {
      * @param businessUser пользователь
      */
     void save(BusinessUser businessUser);
+
+    /**
+     * Получить пользователя по токену.
+     *
+     * @param token токен пользователя
+     * @return данные пользователя
+     */
+    @Nonnull
+    BusinessUser getByToken(String token);
 }

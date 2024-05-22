@@ -1,5 +1,6 @@
 package ru.nsu.fit.directors.businessservice.service;
 
+import ru.nsu.fit.directors.businessservice.dto.request.InviteWorkerRequest;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseWorkerDto;
 
 import java.util.List;
@@ -28,26 +29,10 @@ public interface WorkerService {
     List<ResponseWorkerDto> searchWorkers(Long establishmentId);
 
     /**
-     * Добавить работника в заведение.
-     *
-     * @param workerId        идентификатор работника
-     * @param establishmentId идентификатор заведения
-     */
-    void addWorker(Long workerId, Long establishmentId);
-
-    /**
      * Получить всех работников.
      *
      * @return список всех работников
      */
     @Nonnull
     List<ResponseWorkerDto> getAllWorkers();
-
-    /**
-     * Пригласить работника в заведение.
-     *
-     * @param establishmentId идентификатор заведения
-     * @param token           токен работника
-     */
-    void inviteWorker(Long establishmentId, String token);
 }

@@ -1,13 +1,17 @@
 package ru.nsu.fit.directors.businessservice.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.nsu.fit.directors.businessservice.dto.request.InviteWorkerRequest;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseWorkerDto;
+import ru.nsu.fit.directors.businessservice.facade.WorkerFacade;
 import ru.nsu.fit.directors.businessservice.service.WorkerService;
 
 import java.util.List;
@@ -17,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WorkerController {
     private final WorkerService workerService;
+    private final WorkerFacade workerFacade;
 
     @GetMapping(value = "/all")
     public List<ResponseWorkerDto> getAllWorkers() {
@@ -29,13 +34,13 @@ public class WorkerController {
     }
 
     @PutMapping(value = "/invite")
-    public void inviteWorker(@RequestParam Long establishmentId, @RequestParam String token){
-        workerService.inviteWorker(establishmentId, token);
+    public void inviteWorker(@RequestBody @Valid InviteWorkerRequest inviteWorkerRequest) {
+        workerFacade.inviteWorker(inviteWorkerRequest);
     }
 
     @PutMapping
-    public void addWorker(@RequestParam Long workerId, @RequestParam Long establishmentId) {
-        workerService.addWorker(workerId, establishmentId);
+    public void addWorker(@RequestBody @Valid AddWorkerRequest addWorkerRequest) {
+        workerFacade.addWorker(addWorkerRequest);
     }
 
     @DeleteMapping
