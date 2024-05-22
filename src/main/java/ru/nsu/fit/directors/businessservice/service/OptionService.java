@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import ru.nsu.fit.directors.businessservice.dto.request.RequestOptionDto;
 import ru.nsu.fit.directors.businessservice.model.AvailableOption;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.model.Company;

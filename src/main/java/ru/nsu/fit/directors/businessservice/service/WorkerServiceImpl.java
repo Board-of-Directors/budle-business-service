@@ -4,22 +4,17 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import one.util.streamex.StreamEx;
 import org.springframework.stereotype.Service;
-import ru.nsu.fit.directors.businessservice.dto.request.InviteWorkerRequest;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseWorkerDto;
-import ru.nsu.fit.directors.businessservice.exceptions.EntityNotFoundException;
 import ru.nsu.fit.directors.businessservice.mapper.BusinessUserMapper;
 import ru.nsu.fit.directors.businessservice.model.AvailableOption;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.model.Company;
-import ru.nsu.fit.directors.businessservice.model.EntityType;
-import ru.nsu.fit.directors.businessservice.model.Option;
 import ru.nsu.fit.directors.businessservice.repository.AvailableOptionRepository;
 import ru.nsu.fit.directors.businessservice.repository.BusinessUserRepository;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;

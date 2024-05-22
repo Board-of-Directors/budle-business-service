@@ -1,6 +1,5 @@
 package ru.nsu.fit.directors.businessservice.service;
 
-import ru.nsu.fit.directors.businessservice.dto.request.InviteWorkerRequest;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseWorkerDto;
 
 import java.util.List;
