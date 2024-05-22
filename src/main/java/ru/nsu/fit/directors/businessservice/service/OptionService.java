@@ -20,4 +20,13 @@ public interface OptionService {
      */
     @Nonnull
     List<AvailableOption> getByWorker(BusinessUser worker, Company company);
+
+    /**
+     * Заменить опции.
+     *
+     * @param actualOptions актуальные опции
+     * @param company       компания
+     * @param businessUser  пользователь
+     */
+    void replaceOptions(List<AvailableOption> actualOptions, BusinessUser businessUser, Company company);
 }

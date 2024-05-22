@@ -10,6 +10,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.nsu.fit.directors.businessservice.dto.ChangeOptionRequest;
+import ru.nsu.fit.directors.businessservice.dto.request.RequestOptionDto;
 import ru.nsu.fit.directors.businessservice.dto.response.AvailableOptionResponse;
 import ru.nsu.fit.directors.businessservice.mapper.OptionConverter;
 import ru.nsu.fit.directors.businessservice.model.AvailableOption;
@@ -49,5 +51,17 @@ public class OptionFacadeImpl implements OptionFacade {
         return Arrays.stream(Option.values())
             .map(option -> optionConverter.toResponse(option, false))
             .toList();
+    }
+
+    @Override
+    public void changeOptions(ChangeOptionRequest changeOptionRequest) {
+        BusinessUser businessUser = businessUserService.getById(changeOptionRequest.workerId());
+        Company company = companyService.getById(changeOptionRequest.establishmentId());
+        List<AvailableOption> actualOptions = changeOptionRequest.options()
+            .stream()
+            .filter(RequestOptionDto::isEnabled)
+            .map(option -> optionConverter.toModel(option, businessUser, company))
+            .toList();
+        optionService.replaceOptions(actualOptions, businessUser, company);
     }
 }

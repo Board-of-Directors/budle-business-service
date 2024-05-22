@@ -57,6 +57,7 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public void addWorker(Long workerId, Long establishmentId) {
+        //TODO: Добавление настроек
         employeeService.validateOwner(establishmentId);
         BusinessUser worker = businessUserRepository.findById(workerId).orElseThrow();
         Company company = companyService.getById(establishmentId);
@@ -79,6 +80,7 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public void inviteWorker(Long establishmentId, String token) {
+        // Добавление настроек
         BusinessUser businessUser = businessUserRepository.findByToken(UUID.fromString(token))
             .orElseThrow(() -> new EntityNotFoundException(EntityType.BUSINESS_USER, token));
         Company company = companyService.getById(establishmentId);

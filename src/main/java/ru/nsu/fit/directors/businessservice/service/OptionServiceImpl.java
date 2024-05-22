@@ -23,4 +23,10 @@ public class OptionServiceImpl implements OptionService {
     public List<AvailableOption> getByWorker(BusinessUser worker, Company company) {
         return availableOptionRepository.findAllByBusinessUserAndCompany(worker, company);
     }
+
+    @Override
+    public void replaceOptions(List<AvailableOption> actualOptions, BusinessUser businessUser, Company company) {
+        availableOptionRepository.deleteAllByBusinessUserAndCompany(businessUser, company);
+        availableOptionRepository.saveAll(actualOptions);
+    }
 }
