@@ -11,7 +11,6 @@ import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.model.Company;
 import ru.nsu.fit.directors.businessservice.model.Option;
 import ru.nsu.fit.directors.businessservice.repository.AvailableOptionRepository;
-import ru.nsu.fit.directors.businessservice.repository.BusinessUserRepository;
 
 import java.util.Collection;
 import java.util.List;
@@ -33,8 +32,8 @@ public class WorkerServiceImpl implements WorkerService {
     @Nonnull
     @Override
     public List<ResponseWorkerDto> searchWorkers(Long establishmentId) {
-        employeeService.validateOwner(establishmentId);
         Company company = companyService.getById(establishmentId);
+        employeeService.validateWorker(company, Option.SEARCHING_WORKERS);
         return StreamEx.of(availableOptionRepository.findAllByCompany(company))
             .map(AvailableOption::getBusinessUser)
             .distinct(BusinessUser::getId)
