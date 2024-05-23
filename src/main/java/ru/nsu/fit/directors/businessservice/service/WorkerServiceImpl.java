@@ -9,6 +9,7 @@ import ru.nsu.fit.directors.businessservice.mapper.BusinessUserMapper;
 import ru.nsu.fit.directors.businessservice.model.AvailableOption;
 import ru.nsu.fit.directors.businessservice.model.BusinessUser;
 import ru.nsu.fit.directors.businessservice.model.Company;
+import ru.nsu.fit.directors.businessservice.model.Option;
 import ru.nsu.fit.directors.businessservice.repository.AvailableOptionRepository;
 import ru.nsu.fit.directors.businessservice.repository.BusinessUserRepository;
 
@@ -26,17 +27,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class WorkerServiceImpl implements WorkerService {
     private final EmployeeService employeeService;
     private final BusinessUserMapper businessUserMapper;
-    private final BusinessUserRepository businessUserRepository;
     private final CompanyService companyService;
     private final AvailableOptionRepository availableOptionRepository;
-
-    @Override
-    public void deleteWorker(Long establishmentId, Long workerId) {
-        Company company = companyService.getById(establishmentId);
-        employeeService.validateOwner(establishmentId);
-        BusinessUser worker = businessUserRepository.findById(workerId).orElseThrow();
-        availableOptionRepository.deleteAllByBusinessUserAndCompany(worker, company);
-    }
 
     @Nonnull
     @Override

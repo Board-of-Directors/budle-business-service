@@ -14,11 +14,18 @@ public interface WorkerFacade {
      */
     void inviteWorker(InviteWorkerRequest inviteWorkerRequest);
 
-
     /**
      * Добавить работника в заведение.
      *
      * @param addWorkerRequest запрос добавления работника
      */
     void addWorker(AddWorkerRequest addWorkerRequest);
+
+    /**
+     * Удаление работника из заведения.
+     *
+     * @param establishmentId идентификатор заведения
+     * @param workerId        идентификатор работника
+     */
+    void deleteWorker(Long establishmentId, Long workerId);
 }

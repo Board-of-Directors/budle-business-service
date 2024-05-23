@@ -45,6 +45,6 @@ public class WorkerController {
 
     @DeleteMapping
     public void delete(@RequestParam Long establishmentId, @RequestParam Long workerId) {
-        workerService.deleteWorker(establishmentId, workerId);
+        workerFacade.deleteWorker(establishmentId, workerId);
     }
 }

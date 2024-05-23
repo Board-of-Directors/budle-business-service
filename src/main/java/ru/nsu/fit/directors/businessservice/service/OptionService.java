@@ -38,4 +38,11 @@ public interface OptionService {
      * @param options      переданные настройки
      */
     void addInitialOptions(BusinessUser businessUser, Company company, List<AvailableOption> options);
+
+    /**
+     * Удалить все доступные опции у работника.
+     * @param worker работник
+     * @param company компания
+     */
+    void delete(BusinessUser worker, Company company);
 }

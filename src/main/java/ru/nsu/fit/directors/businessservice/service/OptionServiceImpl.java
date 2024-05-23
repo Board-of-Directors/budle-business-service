@@ -41,4 +41,9 @@ public class OptionServiceImpl implements OptionService {
         );
         availableOptionRepository.saveAll(options);
     }
+
+    @Override
+    public void delete(BusinessUser worker, Company company) {
+        availableOptionRepository.deleteAllByBusinessUserAndCompany(worker, company);
+    }
 }

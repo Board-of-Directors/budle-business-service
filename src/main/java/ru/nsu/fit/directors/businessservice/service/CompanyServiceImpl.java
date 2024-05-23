@@ -98,18 +98,22 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Nonnull
     @Override
-    public List<CompanyDto> getEstablishments(String name) {
+    public List<CompanyDto> getEstablishments(@Nullable String name) {
         BusinessUser user = employeeService.getLoggedInUser();
         List<Long> companyIds = StreamEx.of(availableOptionRepository.findByBusinessUser(user))
             .map(AvailableOption::getCompany)
             .map(Company::getId)
             .distinct()
             .toList();
-        return Optional.ofNullable(establishmentClient.getCompaniesByIds(companyIds).getBody())
+        List<CompanyDto> result = Optional.ofNullable(establishmentClient.getCompaniesByIds(companyIds).getBody())
             .map(BaseResponse::getResult)
-            .orElseGet(List::of)
-            .stream()
-            .filter(company -> StringUtils.containsIgnoreCase(company.name(), name))
-            .toList();
+            .orElseGet(List::of);
+        if (name != null) {
+            return result.stream()
+                .filter(company -> StringUtils.containsIgnoreCase(company.name(), name))
+                .toList();
+        }
+        return result;
+
     }
 }

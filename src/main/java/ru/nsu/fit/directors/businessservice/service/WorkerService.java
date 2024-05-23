@@ -11,14 +11,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public interface WorkerService {
 
     /**
-     * Удалить работника заведения.
-     *
-     * @param establishmentId идентификатор заведения
-     * @param workerId        идентификатор работника
-     */
-    void deleteWorker(Long establishmentId, Long workerId);
-
-    /**
      * Найти работников заведения.
      *
      * @param establishmentId идентификатор заведения
