@@ -109,8 +109,10 @@ public class BusinessUserController {
     }
 
     @GetMapping(value = "establishment/all")
-    public List<CompanyDto> establishments() {
-        return companyService.getEstablishments();
+    public List<CompanyDto> establishments(
+        @RequestParam(required = false) String name
+    ) {
+        return companyService.getEstablishments(name);
     }
 
     @GetMapping(value = "/orders")

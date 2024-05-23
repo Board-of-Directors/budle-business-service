@@ -3,6 +3,7 @@ package ru.nsu.fit.directors.businessservice.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import one.util.streamex.StreamEx;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.businessservice.api.EstablishmentServiceClient;
@@ -97,7 +98,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Nonnull
     @Override
-    public List<CompanyDto> getEstablishments() {
+    public List<CompanyDto> getEstablishments(String name) {
         BusinessUser user = employeeService.getLoggedInUser();
         List<Long> companyIds = StreamEx.of(availableOptionRepository.findByBusinessUser(user))
             .map(AvailableOption::getCompany)
@@ -106,6 +107,9 @@ public class CompanyServiceImpl implements CompanyService {
             .toList();
         return Optional.ofNullable(establishmentClient.getCompaniesByIds(companyIds).getBody())
             .map(BaseResponse::getResult)
-            .orElseGet(List::of);
+            .orElseGet(List::of)
+            .stream()
+            .filter(company -> StringUtils.containsIgnoreCase(company.name(), name))
+            .toList();
     }
 }

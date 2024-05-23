@@ -63,8 +63,9 @@ public interface CompanyService {
     /**
      * Получить список заведений.
      *
+     * @param name название заведения
      * @return список заведений
      */
     @Nonnull
-    List<CompanyDto> getEstablishments();
+    List<CompanyDto> getEstablishments(String name);
 }
