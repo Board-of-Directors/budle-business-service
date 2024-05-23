@@ -1,6 +1,7 @@
 package ru.nsu.fit.directors.businessservice.service;
 
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
+import ru.nsu.fit.directors.businessservice.dto.response.CompanyDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
 import ru.nsu.fit.directors.businessservice.model.Company;
 
@@ -45,6 +46,7 @@ public interface CompanyService {
 
     /**
      * Получить компанию по идентификатору.
+     *
      * @param id идентификатор компании
      * @return компания
      */
@@ -53,7 +55,16 @@ public interface CompanyService {
 
     /**
      * Сохранить компанию.
+     *
      * @param company компания
      */
     void save(Company company);
+
+    /**
+     * Получить список заведений.
+     *
+     * @return список заведений
+     */
+    @Nonnull
+    List<CompanyDto> getEstablishments();
 }

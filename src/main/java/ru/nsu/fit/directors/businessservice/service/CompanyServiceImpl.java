@@ -2,11 +2,13 @@ package ru.nsu.fit.directors.businessservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import one.util.streamex.StreamEx;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.businessservice.api.EstablishmentServiceClient;
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
 import ru.nsu.fit.directors.businessservice.dto.response.BaseResponse;
+import ru.nsu.fit.directors.businessservice.dto.response.CompanyDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
 import ru.nsu.fit.directors.businessservice.exceptions.EntityNotFoundException;
 import ru.nsu.fit.directors.businessservice.model.AvailableOption;
@@ -91,5 +93,19 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void save(Company company) {
         companyRepository.save(company);
+    }
+
+    @Nonnull
+    @Override
+    public List<CompanyDto> getEstablishments() {
+        BusinessUser user = employeeService.getLoggedInUser();
+        List<Long> companyIds = StreamEx.of(availableOptionRepository.findByBusinessUser(user))
+            .map(AvailableOption::getCompany)
+            .map(Company::getId)
+            .distinct()
+            .toList();
+        return Optional.ofNullable(establishmentClient.getCompaniesByIds(companyIds).getBody())
+            .map(BaseResponse::getResult)
+            .orElseGet(List::of);
     }
 }

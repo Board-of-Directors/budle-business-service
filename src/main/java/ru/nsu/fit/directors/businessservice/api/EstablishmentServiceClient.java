@@ -1,5 +1,6 @@
 package ru.nsu.fit.directors.businessservice.api;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.cloud.openfeign.FeignClient;
@@ -18,6 +19,7 @@ import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestCategoryDto;
 import ru.nsu.fit.directors.businessservice.dto.request.RequestProductDto;
 import ru.nsu.fit.directors.businessservice.dto.response.BaseResponse;
+import ru.nsu.fit.directors.businessservice.dto.response.CompanyDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
 
 @FeignClient(
@@ -64,4 +66,7 @@ public interface EstablishmentServiceClient {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/internal/menu/product")
     void changeProduct(@RequestBody ChangeProductRequest changeProductRequest);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/internal/establishment", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<BaseResponse<List<CompanyDto>>> getCompaniesByIds(@RequestParam Collection<Long> ids);
 }

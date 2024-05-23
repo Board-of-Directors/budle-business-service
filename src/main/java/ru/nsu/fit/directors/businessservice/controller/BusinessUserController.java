@@ -22,6 +22,7 @@ import ru.nsu.fit.directors.businessservice.dto.request.BusinessUserRegisterRequ
 import ru.nsu.fit.directors.businessservice.dto.request.CompanyCreateRequestV2;
 import ru.nsu.fit.directors.businessservice.dto.response.BaseResponse;
 import ru.nsu.fit.directors.businessservice.dto.response.BusinessUserCredentialsResponse;
+import ru.nsu.fit.directors.businessservice.dto.response.CompanyDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseMessageDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseOrderDto;
 import ru.nsu.fit.directors.businessservice.dto.response.ResponseShortEstablishmentInfo;
@@ -105,6 +106,11 @@ public class BusinessUserController {
         @RequestParam(required = false) String name
     ) {
         return companyService.getEstablishmentsByOwner(name);
+    }
+
+    @GetMapping(value = "establishment/all")
+    public List<CompanyDto> establishments() {
+        return companyService.getEstablishments();
     }
 
     @GetMapping(value = "/orders")
