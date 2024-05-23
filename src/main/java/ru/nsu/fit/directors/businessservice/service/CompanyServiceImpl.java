@@ -74,7 +74,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void deleteCompany(Long establishmentId) {
         Company company = getById(establishmentId);
-        employeeService.validateOwner(company.getId());
+        employeeService.validateWorker(company, Option.DELETE_COMPANY);
         establishmentClient.deleteEstablishment(establishmentId);
         companyRepository.deleteById(establishmentId);
     }
@@ -82,7 +82,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void changeCompany(Long establishmentId, CompanyCreateRequestV2 changeRequest) {
         Company company = getById(establishmentId);
-        employeeService.validateOwner(company.getId());
+        employeeService.validateWorker(company, Option.EDITING_COMPANY);
         establishmentClient.update(establishmentId, changeRequest);
     }
 
