@@ -75,8 +75,9 @@ public class CompanyServiceImpl implements CompanyService {
     public void deleteCompany(Long establishmentId) {
         Company company = getById(establishmentId);
         employeeService.validateWorker(company, Option.DELETE_COMPANY);
-        establishmentClient.deleteEstablishment(establishmentId);
+        availableOptionRepository.deleteAllByCompany(company);
         companyRepository.deleteById(establishmentId);
+        establishmentClient.deleteEstablishment(establishmentId);
     }
 
     @Override

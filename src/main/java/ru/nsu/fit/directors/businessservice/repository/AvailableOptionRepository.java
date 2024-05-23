@@ -25,4 +25,6 @@ public interface AvailableOptionRepository extends JpaRepository<AvailableOption
     List<AvailableOption> findAllByCompany(Company company);
 
     List<AvailableOption> findByBusinessUser(BusinessUser businessUser);
+
+    void deleteAllByCompany(Company company);
 }
